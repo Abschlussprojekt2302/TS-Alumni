@@ -10,5 +10,11 @@
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
+
+    <template>
+      <div class="messages" id="messages">
+        <div v-for="message in messages" :key="message.id" class="message">{{ message.text }}</div>
+      </div>
+    
   </body>
 </html>
