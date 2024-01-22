@@ -8,7 +8,8 @@ function LoginGoogle() {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate(); // Verwenden von useNavigate
 
-  // Funktion zum Abrufen von Benutzerdaten von Google People API
+  // Funktion zum Abrufen von Benutzerdaten von Google People API 
+  // Muss ins Backend!
   const fetchGoogleUserData = async (accessToken) => {
     try {
       const response = await fetch(
@@ -27,8 +28,10 @@ function LoginGoogle() {
       return null;
     }
   };
+  //
 
   // Funktion zum Transformieren und Senden von Daten an das Backend
+  // Send Token to Backend & get User Data
   const sendDataToBackend = async (googleData) => {
     const truncatedId = googleData.sub.slice(0, 9);
 
