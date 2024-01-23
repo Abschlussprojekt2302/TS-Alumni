@@ -2,6 +2,7 @@
 # Erstellung des Container-Images für das Frontend
 # © 2024 Markus Rennings
 
+
 FROM node:alpine as build
 
 RUN <<EOF
