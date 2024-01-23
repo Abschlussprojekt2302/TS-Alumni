@@ -52,3 +52,4 @@ jobs:
 
       - name: Push Docker Image to ECR
         run: docker push 048479317518.dkr.ecr.eu-central-1.amazonaws.com/frontend-image:latest
+        timeout-minutes: 10
