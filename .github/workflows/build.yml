@@ -36,14 +36,7 @@ jobs:
         run: aws configure list-profiles
 
       - name: List S3 Buckets
-        run: aws s3 ls --region eu-central-1 --profile Student-967256770327
-
-      - name: Configure AWS Credentials for ECR Login
-        uses: aws-actions/configure-aws-credentials@v1
-        with:
-          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: "eu-central-1"
+        run: aws s3 ls --region eu-central-1 --profile 048479317518_Student
 
       - name: Amazon ECR Login
         id: login-ecr
