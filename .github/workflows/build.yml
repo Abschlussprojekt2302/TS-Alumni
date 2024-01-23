@@ -3,7 +3,7 @@ name: Upload a Docker image to AWS ECR
 on:
   push:
     branches:
-      - pipeline
+      - main
 
 jobs:
   build:
@@ -53,3 +53,5 @@ jobs:
       - name: Push Docker Image to ECR
         run: docker push 048479317518.dkr.ecr.eu-central-1.amazonaws.com/nick:latest
         timeout-minutes: 10
+
+        ##
