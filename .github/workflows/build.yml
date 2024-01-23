@@ -51,5 +51,5 @@ jobs:
         run: docker tag frontend-image:latest 048479317518.dkr.ecr.eu-central-1.amazonaws.com/frontend-image:latest
 
       - name: Push Docker Image to ECR
-        run: docker push 048479317518.dkr.ecr.eu-central-1.amazonaws.com/frontend-image:latest
+        run: docker push 048479317518.dkr.ecr.eu-central-1.amazonaws.com/nick:latest
         timeout-minutes: 10
