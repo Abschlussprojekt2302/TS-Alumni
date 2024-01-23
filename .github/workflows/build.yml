@@ -24,7 +24,7 @@ jobs:
       - name: Build Docker Image
         run: |
           ls -la
-          docker build -t frontend-image .
+          docker build -t frontend-image $GITHUB_WORKSPACE
 
       - name: Amazon ECR Login
         id: login-ecr
