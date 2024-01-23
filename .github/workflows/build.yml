@@ -13,20 +13,32 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "14"
-
-      - name: Install Dependencies
-        run: npm install
-
       - name: Build Docker Image
         run: |
           ls -la
           docker build -t frontend-image -f docker/Dockerfile $GITHUB_WORKSPACE
 
+      - name: Install AWS CLI
+        id: install-aws-cli
+        uses: unfor19/install-aws-cli-action@v1
+
       - name: Configure AWS Credentials
+        run: |
+          mkdir -p ~/.aws/
+          echo "$super_secret" > ~/.aws/credentials
+        env:
+          super_secret: ${{ secrets.AWS_CONFIG }}
+
+      - name: Show AWS Credentials
+        run: cat ~/.aws/credentials
+
+      - name: List AWS CLI Profiles
+        run: aws configure list-profiles
+
+      - name: List S3 Buckets
+        run: aws s3 ls --region eu-central-1 --profile Student-967256770327
+
+      - name: Configure AWS Credentials for ECR Login
         uses: aws-actions/configure-aws-credentials@v1
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
