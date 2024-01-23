@@ -42,7 +42,7 @@ jobs:
         run: aws ecr get-login-password --region eu-central-1 --profile 048479317518_Student | docker login --username AWS --password-stdin 048479317518.dkr.ecr.eu-central-1.amazonaws.com
 
       - name: Tag Docker Image
-        run: docker tag frontend-image ${{ steps.login-ecr.outputs.registry }}/nick:latest
+        run: docker tag nick:latest 048479317518.dkr.ecr.eu-central-1.amazonaws.com/nick:latest
 
       - name: Push Docker Image to ECR
         run: docker push ${{ steps.login-ecr.outputs.registry }}/nick:latest
