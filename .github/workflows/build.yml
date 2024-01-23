@@ -40,10 +40,6 @@ jobs:
 
       - name: Amazon ECR Login
         run: aws ecr get-login-password --region eu-central-1 --profile 048479317518_Student | docker login --username AWS --password-stdin 048479317518.dkr.ecr.eu-central-1.amazonaws.com
-        run: docker build -t nick .
-        run: docker tag nick:latest 048479317518.dkr.ecr.eu-central-1.amazonaws.com/nick:latest
-        run: docker push 048479317518.dkr.ecr.eu-central-1.amazonaws.com/nick:latest
-
 
       - name: Tag Docker Image
         run: docker tag frontend-image ${{ steps.login-ecr.outputs.registry }}:latest
