@@ -70,12 +70,12 @@ const newsFeed = () => {
             id="fileInput"
           />
           <label htmlFor="fileInput" className="upload-button">Upload Image</label>
-          <input
+         {/*  <input
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             placeholder="Enter your username"
-          />
+          /> */}
           <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
