@@ -23,6 +23,7 @@ jobs:
 
       - name: Build Docker Image
         run: |
+          ls -la
           docker build -t frontend-image .
 
       - name: Amazon ECR Login
