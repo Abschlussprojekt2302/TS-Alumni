@@ -10,8 +10,21 @@ const AccountErstellung = (props) => {
 
   const handleCreateAccount = () => {
     console.log('Account erstellen:', { Geburtsdatum, Kurs });
-    navigate('/'); // Weiterleitung zu Home
+    navigate('/newsfeed'); // Weiterleitung zu Home
   };
+
+  const handleLogin = () => {
+    try {
+      const response = apiCall.post(api.lambda/getAllPosts);
+      if (response.status === 'ok') {
+        navigate('/newsfeed');
+      } else {
+        console.error('Fehler beim Anmelden.', response);
+      }
+     } catch (error) {
+        console.error('Fehler beim Abrufen von Google-Benutzerdaten. handleLogin', error);
+      }
+    };
 
   return (
     <div className="account-erstellung-container">
@@ -25,7 +38,7 @@ const AccountErstellung = (props) => {
         />
         <input
           type="text"
-          placeholder="Kurs"
+          placeholder="Kurs (z.B. 2302)"
           value={Kurs}
           onChange={(e) => setKurs(e.target.value)}
         />
