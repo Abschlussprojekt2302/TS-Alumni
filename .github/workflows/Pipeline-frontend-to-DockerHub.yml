@@ -16,6 +16,11 @@ jobs:
       - name: Set up Docker Buildx
         run: docker buildx create --use
 
+  build-docker-image:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Build Docker Image
         id: build-image
         run: |
@@ -23,6 +28,11 @@ jobs:
           docker build -t aws2302/frontendimage -f docker/Dockerfile $GITHUB_WORKSPACE
           echo "::set-output name=image-name::aws2302/frontendimage"
 
+  login-to-docker-hub:
+    needs: build-and-push
+    runs-on: ubuntu-latest
+
+    steps:
       - name: Login to Docker Hub
         run: |
           echo "[$(date -u)] Logging in to Docker Hub..."
@@ -34,32 +44,8 @@ jobs:
             exit 1
           fi
 
-      - name: Tag Docker image
-        run: |
-          echo "[$(date -u)] Tagging Docker image..."
-          docker tag aws2302/frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
-          if [ $? -eq 0 ]; then
-            echo "[$(date -u)] Tagged Docker image successfully"
-          else
-            echo "[$(date -u)] Error: Failed to tag Docker image"
-            exit 1
-          fi
-
-      - name: Push Docker image
-        run: |
-          echo "[$(date -u)] Pushing Docker image..."
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
-          if [ $? -eq 0 ]; then
-            echo "[$(date -u)] Pushed Docker image successfully"
-          else
-            echo "[$(date -u)] Error: Failed to push Docker image"
-            exit 1
-          fi
-
-      - name: Task complete
-        run: echo "[$(date -u)] Task complete"
-
   aws-steps:
+    needs: build-docker-image
     runs-on: ubuntu-latest
 
     steps:
@@ -82,4 +68,3 @@ jobs:
 
       - name: List S3 Buckets
         run: aws s3 ls --region eu-central-1 --profile 048479317518_Student
-        ##
