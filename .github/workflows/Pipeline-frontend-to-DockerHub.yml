@@ -16,16 +16,12 @@ jobs:
       - name: Set up Docker Buildx
         run: docker buildx create --use
 
-      - name: Build Docker image
+      - name: Build Docker Image
+        id: build-image
         run: |
-          echo "[$(date -u)] Building Docker image..."
-          docker buildx build --platform linux/amd64,linux/arm64 -t frontendimage:latest -f docker/Dockerfile .
-          if [ $? -eq 0 ]; then
-            echo "[$(date -u)] Built Docker image successfully"
-          else
-            echo "[$(date -u)] Error: Failed to build Docker image"
-            exit 1
-          fi
+          ls -la
+          docker build -t kikibuh/frontendimage -f docker/Dockerfile $GITHUB_WORKSPACE
+          echo "::set-output name=image-name::kikibuh/frontendimage"
 
       - name: Login to Docker Hub
         run: |
@@ -41,7 +37,7 @@ jobs:
       - name: Tag Docker image
         run: |
           echo "[$(date -u)] Tagging Docker image..."
-          docker tag kikibuh/frontend:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
+          docker tag kikibuh/frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Tagged Docker image successfully"
           else
