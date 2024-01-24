@@ -23,9 +23,9 @@
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
 }
 
-.app body {
+/*.app body {
   font-family: 'Caviar Dreams', sans-serif;
-}
+}*/
 
 .app .message {
   background-color: #ffff66;

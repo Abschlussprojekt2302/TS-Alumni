@@ -19,9 +19,8 @@ const Reactions = ({ reactions }) => (
 const NewsFeed = () => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState('');
-  const [username, setUsername] = useState('');
   const [uploadedImage, setUploadedImage] = useState(null);
-  const [userData, setUserData] = useState({}); // State für Nutzerdaten hinzugefügt
+  const [userData, setUserData] = useState({});
 
   useEffect(() => {
     // Hier fügst du den Code ein, um die Nutzerdaten vom Backend abzurufen
@@ -39,35 +38,47 @@ const NewsFeed = () => {
         console.log(data);
 
         if (data.status === 'ok') {
-          // Nutzerdaten im State aktualisieren
-          setUserData(data); // Annahme: Das Backend gibt die Nutzerdaten als "userData" zurück
+          setUserData(data);
         } else {
-          console.error('Fehler beim Abrufen der Nutzerdaten');
+          console.error('Fehler beim Abrufen der Nutzerdaten', data);
         }
       } catch (error) {
         console.error('Fehler beim Netzwerkaufruf', error);
       }
     };
 
-    fetchUserData(userData);
-  }, []); // Leere Abhängigkeitsliste bedeutet, dass dieser Effekt nur einmal nach der Montage aufgerufen wird
+    fetchUserData();
+  }, []); 
 
-
-  const handleSendMessage = () => {
+  const handleSendMessage = async () => {
     if ((newMessage.trim() !== '' || uploadedImage) && username.trim() !== '') {
-      // Hier kannst du die Nutzerdaten in deine Nachricht integrieren
-      const newPost = {
-        text: newMessage,
-        username: username,
-        timestamp: Date.now(),
-        image: uploadedImage,
-        // Nutzerdaten integrieren (Beispiel)
-        userId: userData.userId,
-        userFullName: userData.fullName,
-      };
-      setMessages([...messages, newPost]);
-      setNewMessage('');
-      setUploadedImage(null);
+      try {
+        const response = await fetch('https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/addPost', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            user_id: userData.userId, // Nutzer-ID aus den abgerufenen Daten
+            content: newMessage,
+            media_link: uploadedImage,
+          }),
+        });
+
+        const data = await response.json();
+
+        console.log('Data:', data);
+
+        if (data.status === 'ok') {
+          setMessages([...messages, data.savedPost]);
+          setNewMessage('');
+          setUploadedImage(null);
+        } else {
+          console.error('Fehler beim Speichern der Nachricht');
+        }
+      } catch (error) {
+        console.error('Fehler beim Netzwerkaufruf', error);
+      }
     }
   };
 
@@ -86,13 +97,13 @@ const NewsFeed = () => {
       <div className="chat">
         <div className="messages">
           {messages.slice(-1000).map((message, index) => (
-           <div className="message">
-           <UserProfile username={message.username} />
-           <p>{message.text}</p>
-           {message.image && <img src={message.image} alt="Uploaded" />} {/* Display the uploaded image */}
-           {message.timestamp && <p>Posted at: {new Date(message.timestamp).toLocaleTimeString()}</p>}
-           <Reactions reactions={message.reactions || []} />
-          </div>
+            <div className="message" key={index}>
+              <UserProfile username={message.username} />
+              <p>{message.text}</p>
+              {message.image && <img src={message.image} alt="Uploaded" />}
+              {message.timestamp && <p>Posted at: {new Date(message.timestamp).toLocaleTimeString()}</p>}
+              <Reactions reactions={message.reactions || []} />
+            </div>
           ))}
         </div>
         <div className="input-container">
@@ -110,12 +121,6 @@ const NewsFeed = () => {
             id="fileInput"
           />
           <label htmlFor="fileInput" className="upload-button">Upload Image</label>
-          {/* <input
-            type="text"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            placeholder="Enter your username"
-          /> */}
           <button onClick={handleSendMessage}>Send</button>
         </div>
       </div>
