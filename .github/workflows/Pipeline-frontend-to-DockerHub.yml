@@ -1,9 +1,9 @@
-name: Build and Push Docker Image
+name: Build and Push Docker Image to Dockerhub
 
 on:
   push:
     branches:
-      - main
+      - pipeline
 
 jobs:
   build-and-push:
@@ -13,49 +13,52 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
+      - name: Set up Docker Buildx
+        run: docker buildx create --use
+
       - name: Build Docker image
         run: |
-          echo "Building Docker image..."
-          docker build -t frontend-image:latest .
+          echo "[$(date -u)] Building Docker image..."
+          docker buildx build --platform linux/amd64,linux/arm64 -t frontendimage:latest .
           if [ $? -eq 0 ]; then
-            echo "Built Docker image successfully"
+            echo "[$(date -u)] Built Docker image successfully"
           else
-            echo "Error: Failed to build Docker image"
+            echo "[$(date -u)] Error: Failed to build Docker image"
             exit 1
           fi
 
       - name: Login to Docker Hub
         run: |
-          echo "Logging in to Docker Hub..."
+          echo "[$(date -u)] Logging in to Docker Hub..."
           echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
           if [ $? -eq 0 ]; then
-            echo "Logged in to Docker Hub successfully"
+            echo "[$(date -u)] Logged in to Docker Hub successfully"
           else
-            echo "Error: Failed to log in to Docker Hub"
+            echo "[$(date -u)] Error: Failed to log in to Docker Hub"
             exit 1
           fi
 
       - name: Tag Docker image
         run: |
-          echo "Tagging Docker image..."
-          docker tag frontend-image:latest "kikibuh/frontend-image:latest"
+          echo "[$(date -u)] Tagging Docker image..."
+          docker tag frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
           if [ $? -eq 0 ]; then
-            echo "Tagged Docker image successfully"
+            echo "[$(date -u)] Tagged Docker image successfully"
           else
-            echo "Error: Failed to tag Docker image"
+            echo "[$(date -u)] Error: Failed to tag Docker image"
             exit 1
           fi
 
       - name: Push Docker image
         run: |
-          echo "Pushing Docker image..."
-          docker push "kikibuh/frontend-image:latest"
+          echo "[$(date -u)] Pushing Docker image..."
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
           if [ $? -eq 0 ]; then
-            echo "Pushed Docker image successfully"
+            echo "[$(date -u)] Pushed Docker image successfully"
           else
-            echo "Error: Failed to push Docker image"
+            echo "[$(date -u)] Error: Failed to push Docker image"
             exit 1
           fi
 
       - name: Task complete
-        run: echo "Task complete"
+        run: echo "[$(date -u)] Task complete"
