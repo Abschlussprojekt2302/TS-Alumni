@@ -1,0 +1,61 @@
+name: Build and Push Docker Image
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Build Docker image
+        run: |
+          echo "Building Docker image..."
+          docker build -t frontend-image:latest .
+          if [ $? -eq 0 ]; then
+            echo "Built Docker image successfully"
+          else
+            echo "Error: Failed to build Docker image"
+            exit 1
+          fi
+
+      - name: Login to Docker Hub
+        run: |
+          echo "Logging in to Docker Hub..."
+          echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ secrets.DOCKERHUB_USERNAME }}" --password-stdin
+          if [ $? -eq 0 ]; then
+            echo "Logged in to Docker Hub successfully"
+          else
+            echo "Error: Failed to log in to Docker Hub"
+            exit 1
+          fi
+
+      - name: Tag Docker image
+        run: |
+          echo "Tagging Docker image..."
+          docker tag frontend-image:latest "kikibuh/frontend-image:latest"
+          if [ $? -eq 0 ]; then
+            echo "Tagged Docker image successfully"
+          else
+            echo "Error: Failed to tag Docker image"
+            exit 1
+          fi
+
+      - name: Push Docker image
+        run: |
+          echo "Pushing Docker image..."
+          docker push "kikibuh/frontend-image:latest"
+          if [ $? -eq 0 ]; then
+            echo "Pushed Docker image successfully"
+          else
+            echo "Error: Failed to push Docker image"
+            exit 1
+          fi
+
+      - name: Task complete
+        run: echo "Task complete"
