@@ -38,7 +38,7 @@ jobs:
       - name: Tag Docker image
         run: |
           echo "Tagging Docker image..."
-          docker tag frontend-image:latest "kikibuh/frontend-image:latest"
+          docker tag aws2302/aws2302:latest "aws2302/aws2302:latest"
           if [ $? -eq 0 ]; then
             echo "Tagged Docker image successfully"
           else
@@ -49,7 +49,7 @@ jobs:
       - name: Push Docker image
         run: |
           echo "Pushing Docker image..."
-          docker push "kikibuh/frontend-image:latest"
+          docker push "aws2302/aws2302:latest"
           if [ $? -eq 0 ]; then
             echo "Pushed Docker image successfully"
           else
