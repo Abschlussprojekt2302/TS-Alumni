@@ -19,7 +19,7 @@ jobs:
       - name: Build Docker image
         run: |
           echo "[$(date -u)] Building Docker image..."
-          docker buildx build --platform linux/amd64,linux/arm64 -t frontendimage:latest .
+          docker buildx build --platform linux/amd64,linux/arm64 -t frontendimage:latest -f docker/Dockerfile .
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Built Docker image successfully"
           else
