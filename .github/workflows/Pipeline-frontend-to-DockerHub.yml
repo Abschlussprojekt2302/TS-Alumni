@@ -41,7 +41,7 @@ jobs:
       - name: Tag Docker image
         run: |
           echo "[$(date -u)] Tagging Docker image..."
-          docker tag frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
+          docker tag kikibuh/frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Tagged Docker image successfully"
           else
