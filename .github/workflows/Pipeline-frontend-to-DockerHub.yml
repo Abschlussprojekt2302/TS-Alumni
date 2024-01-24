@@ -41,7 +41,7 @@ jobs:
       - name: Tag Docker image
         run: |
           echo "[$(date -u)] Tagging Docker image..."
-          docker tag kikibuh/frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
+          docker tag kikibuh/frontend:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Tagged Docker image successfully"
           else
@@ -52,7 +52,7 @@ jobs:
       - name: Push Docker image
         run: |
           echo "[$(date -u)] Pushing Docker image..."
-          docker push "${{ secrets.DOCKERHUB_USERNAME }}/frontend-image:latest"
+          docker push "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Pushed Docker image successfully"
           else
