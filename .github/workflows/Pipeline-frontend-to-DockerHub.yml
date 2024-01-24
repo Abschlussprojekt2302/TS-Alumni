@@ -36,8 +36,13 @@ jobs:
 
       - name: Tag Docker image
         run: |
+<<<<<<< HEAD
           echo "[$(date -u)] Tagging Docker image..."
           docker tag aws2302/aws2302:latest "${{ secrets.DOCKERHUB_USERNAME }}/aws2302:latest"
+=======
+          echo "Tagging Docker image..."
+          docker tag aws2302/aws2302:latest "aws2302/aws2302:latest"
+>>>>>>> main
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Tagged Docker image successfully"
           else
@@ -47,8 +52,13 @@ jobs:
 
       - name: Push Docker image
         run: |
+<<<<<<< HEAD
           echo "[$(date -u)] Pushing Docker image..."
           docker push "${{ secrets.DOCKERHUB_USERNAME }}/aws2302:latest"
+=======
+          echo "Pushing Docker image..."
+          docker push "aws2302/aws2302:latest"
+>>>>>>> main
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Pushed Docker image successfully"
           else
