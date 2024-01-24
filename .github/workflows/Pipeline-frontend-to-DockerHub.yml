@@ -20,8 +20,8 @@ jobs:
         id: build-image
         run: |
           ls -la
-          docker build -t frontendimage -f docker/Dockerfile $GITHUB_WORKSPACE
-          echo "::set-output name=image-name::frontend-image"
+          docker build -t kikibuh/frontendimage -f docker/Dockerfile $GITHUB_WORKSPACE
+          echo "::set-output name=image-name::kikibuh/frontendimage"
 
       - name: Login to Docker Hub
         run: |
@@ -37,7 +37,7 @@ jobs:
       - name: Tag Docker image
         run: |
           echo "[$(date -u)] Tagging Docker image..."
-          docker tag kikibuh/frontend:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
+          docker tag kikibuh/frontendimage:latest "${{ secrets.DOCKERHUB_USERNAME }}/frontend:latest"
           if [ $? -eq 0 ]; then
             echo "[$(date -u)] Tagged Docker image successfully"
           else
@@ -58,5 +58,3 @@ jobs:
 
       - name: Task complete
         run: echo "[$(date -u)] Task complete"
-
-        ##
