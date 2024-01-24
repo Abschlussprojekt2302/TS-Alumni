@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import '../newsfeed.css';
+import newsfeedItem from 'src/routes/components/newsfeedItem.jsx';
 
 const UserProfile = ({ username }) => (
   <div className="user-profile">
