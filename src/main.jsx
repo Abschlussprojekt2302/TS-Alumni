@@ -1,27 +1,12 @@
-/*import React from 'react';
-import ReactDOM from 'react-dom';
-import App from './App';
-import './index.css';
-//##################### routes
-// import
-// import
-ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
-);*/
-
-//########## Was soll der Part und was handelt dieser? RS Karim #############
-
 import React from 'react';
-import ReactDOM from 'react-dom';
-//import App from './App';
+import { createRoot } from 'react-dom/client';
 import './index.css';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 //#################################routen
 import Root from './routes/root';
 import LoginGoogle from './routes/logingoogle';
+import AccountErstellung from './routes/newacc';
+import NewsFeed from './routes/newsfeed';
 
 const router = createBrowserRouter([
   {
@@ -29,14 +14,25 @@ const router = createBrowserRouter([
     element: <Root />,
   },
   {
+    path: "/newacc",
+    element: <AccountErstellung />,
+  },
+  {
+    path: "/newsfeed",
+    element: <NewsFeed />,
+  },
+  {
     path: "/login/google",
     element: <LoginGoogle />,
   },
+  
 ]);
 
-ReactDOM.render(
+const container = document.getElementById('root');
+const root = createRoot(container); // Erstellt Root
+
+root.render(
   <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>,
-  document.getElementById('root')
+  </React.StrictMode>
 );
