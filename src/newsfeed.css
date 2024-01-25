@@ -5,6 +5,7 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: var(--primary-background-color); /* Verwendung der Variable */
 }
  
 /* Stile spezifisch innerhalb des .app Containers */
@@ -20,7 +21,7 @@
 .app .chat {
   width: 300px;
   padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  box-shadow: none; /* Entfernen des Schattens */
 }
 
 .app body {
@@ -95,6 +96,4 @@
   border: none;
   cursor: pointer;
   content: "\2B06";
-
 }
-
