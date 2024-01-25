@@ -47,7 +47,7 @@ function LoginGoogle() {
       setUserData(responseData);
       localStorage.setItem("Session", JSON.stringify(responseData.sessionData));
 
-      if (responseData.isNewUser = false) {
+      if (responseData.isNewUser === false) {
         navigate("/newacc");
       }
       else {
