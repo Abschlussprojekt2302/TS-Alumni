@@ -5,8 +5,10 @@
   justify-content: center;
   align-items: center;
   height: 100vh;
+  background-color: var(--primary-background-color);
+  /* Verwendung der Variable aus index.css*/
 }
- 
+
 /* Stile spezifisch innerhalb des .app Containers */
 .app .logo {
   height: 100px;
@@ -18,14 +20,15 @@
 }
 
 .app .chat {
-  width: 300px;
-  padding: 20px;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  width: 1000px;
+  padding: 100px;
+  box-shadow: none;
+  /* Entfernen des Schattens */
 }
 
-/*.app body {
+.app body {
   font-family: 'Caviar Dreams', sans-serif;
-}*/
+}
 
 .app .message {
   background-color: #ffff66;
@@ -63,25 +66,75 @@
 
 .app .input-container {
   display: flex;
+  align-items: center;
   margin-top: 10px;
+  background: #242424;
+  /* Huntergrundfarbe */
+  padding: 10px;
+  border-radius: 8px;
+  /* für abgerundete Ecken */
 }
 
-.app input {
+.app input[type='text'] {
   flex: 1;
   padding: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  /* leichter Rahmen um das Textfeld */
+  color: white;
+  /* text */
   margin-right: 5px;
-  background-image: url('/home/debian/Abschlussprojekt-Front-Backend/src/routes/picture/upload.png');
-  background-size: 20px 20px;
-  background-repeat: no-repeat;
-  background-position: right;
+  transition: boarder-color 0.3s ease;
+  /* sanfter Übergang für Effekte */
+  border-radius: 4px;
+}
+
+.app input[type='text'] {
+  flex: 1;
+  padding: 5px;
+  background: transparent;
+  border: 1px solid transparent;
+  /* Standardmäßig transparenter Rahmen */
+  color: white;
+  /* ... */
+  margin-right: 5px;
+  transition: border-color 0.25s;
+  /* Transition für den Hover-Effekt */
+}
+
+.app input[type='text']:hover {
+  border-color: #646cff;
+  /* Rahmenfarbe beim Hover */
+  /* Keine Hintergrundänderung erforderlich, da Sie nur den Rahmen wollen */
+}
+
+.app .upload-button {
+  cursor: pointer;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 1em;
+  /* Gleiche Schriftgröße wie der "Send" Button */
+  font-family: inherit;
+  /* Gleiche Schriftart wie der "Send" Button */
+  /* Anpassung der Größe */
+  width: auto;
+  white-space: nowrap; /* Einzeiliger Text */
+  font-weight: bold;
 }
 
 .app button {
-  padding: 5px 10px;
-  background-color: #4caf50;
-  color: #fff;
-  border: none;
   cursor: pointer;
+  background-color: #646cff;
+  /* Button-Hintergrundfarbe */
+  color: white;
+  /* Button-Textfarbe */
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  /* Optional: für abgerundete Ecken */
 }
 
 .app .upload-button {
