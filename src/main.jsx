@@ -8,6 +8,7 @@ import LoginGoogle from './routes/logingoogle';
 import AccountErstellung from './routes/newacc';
 import NewsFeed from './routes/newsfeed';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,10 +26,7 @@ const router = createBrowserRouter([
     path: "/login/google",
     element: <LoginGoogle />,
   },
-  {
-    path: "/newsfeed",
-    element: <NewsFeed />,
-  },
+  
 ]);
 
 const container = document.getElementById('root');
