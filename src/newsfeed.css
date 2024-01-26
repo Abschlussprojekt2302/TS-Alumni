@@ -7,6 +7,22 @@
   --info-color: #999999; /* Farbe für Nutzerinformationen */
 }
 
+/* Webkit-basierte Browser (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Breite der Scrollleiste */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray; /* Hintergrundfarbe des Scroll-Thumb (der graue Teil) */
+  border-radius: 5px; /* Abgerundete Ecken des Scroll-Thumbs */
+}
+
+/* Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: gray;
+}
+
 .app {
   display: flex;
   flex-direction: column;
