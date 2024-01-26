@@ -66,7 +66,7 @@ function LoginGoogle() {
       }
 
       if (responseData.isNewUser === false) {
-        navigate("/newacc");
+        navigate("/newsfeed");
       }
       else {
         navigate("/newacc");
