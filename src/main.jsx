@@ -33,7 +33,7 @@ const container = document.getElementById('root');
 const root = createRoot(container); // Erstellt Root
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
