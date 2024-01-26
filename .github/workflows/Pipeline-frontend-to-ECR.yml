@@ -20,7 +20,7 @@ jobs:
         id: build-image
         run: |
           ls -la
-          docker build -t frontend-image -f docker/Dockerfile $GITHUB_WORKSPACE
+          docker build -t frontendimage -f docker/Dockerfile $GITHUB_WORKSPACE
           echo "::set-output name=image-name::frontend-image"
 
       - name: Install AWS CLI
