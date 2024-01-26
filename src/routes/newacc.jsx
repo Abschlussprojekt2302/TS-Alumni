@@ -8,23 +8,37 @@ const AccountErstellung = (props) => {
   const [Kurs, setKurs] = useState('');
   const navigate = useNavigate(); // Erstellen einer Instanz von useHistory
 
-  const handleCreateAccount = () => {
-    console.log('Account erstellen:', { Geburtsdatum, Kurs });
+  const handleCreateAccount = async () => {
+    try {
+      
+      const response = await fetch('https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/updateUser', {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "user_id":localStorage.getItem("UserID"),
+          "BirthDate": Geburtsdatum,
+          "Course":Kurs
+      
+      })
+      });
+    }catch (error) {
+      console.error("Fehler beim Senden der Daten an das Backend.", error);
+    } 
     navigate('/newsfeed'); // Weiterleitung zu Home
   };
-
-  const handleLogin = () => {
-    try {
-      const response = apiCall.post(api.lambda/getAllPosts);
-      if (response.status === 'ok') {
-        navigate('/newsfeed');
-      } else {
-        console.error('Fehler beim Anmelden.', response);
-      }
-     } catch (error) {
-        console.error('Fehler beim Abrufen von Google-Benutzerdaten. handleLogin', error);
-      }
-    };
+///  Doppelt (newsfeed.jsx)  ///
+  // const handleLogin = () => {
+  //   try {
+  //     const response = apiCall.post(api.lambda/getAllPosts);
+  //     if (response.status === 'ok') {
+  //       navigate('/newsfeed');
+  //     } else {
+  //       console.error('Fehler beim Anmelden.', response);
+  //     }
+  //    } catch (error) {
+  //       console.error('Fehler beim Abrufen von Google-Benutzerdaten. handleLogin', error);
+  //     }
+  //   };
 
   return (
     <div className="account-erstellung-container">

@@ -63,14 +63,16 @@ const NewsFeed = () => {
       const data = await response.json();
 
       console.log('Data:', data);
+      window.location.reload(true);
+     
 
-      if (data.status === 'ok') {
-        setMessages([...messages, data.savedPost]);
-        setNewMessage('');
-        setUploadedImage(null);
-      } else {
-        console.error('Fehler beim Speichern der Nachricht');
-      }
+      // if (data.status === 'ok') {
+      //   setMessages([...messages, data.savedPost]);
+      //   setNewMessage('');
+      //   setUploadedImage(null);
+      // } else {
+      //   console.error('Fehler beim Speichern der Nachricht');
+      // }
     } catch (error) {
       console.error('Fehler beim Netzwerkaufruf', error);
     }
