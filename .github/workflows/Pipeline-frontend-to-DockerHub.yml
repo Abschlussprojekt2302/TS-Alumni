@@ -84,8 +84,13 @@ jobs:
       - name: List S3 Buckets
         run: aws s3 ls --region eu-central-1 --profile 048479317518_Student
 
-      - name: SSH into EC2 instance
+      - name: SSH into EC2 instance and create /app directory
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-          # Add your commands to execute
+            mkdir -p /app
+          '
+        env:
+          PRIVATE_KEY: ${{ secrets.EC2_KEY }}
+          USER_NAME: ${{ secrets.EC2_USER }}
+          HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
