@@ -22,5 +22,6 @@ FROM nginx:alpine
 
 
 COPY --from=build /Frontend/dist /usr/share/nginx/html
+COPY files/default.conf /etc/nginx/conf.d
 
 EXPOSE 80
