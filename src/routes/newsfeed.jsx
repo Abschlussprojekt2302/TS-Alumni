@@ -66,13 +66,6 @@ const NewsFeed = () => {
       window.location.reload(true);
      
 
-      // if (data.status === 'ok') {
-      //   setMessages([...messages, data.savedPost]);
-      //   setNewMessage('');
-      //   setUploadedImage(null);
-      // } else {
-      //   console.error('Fehler beim Speichern der Nachricht');
-      // }
     } catch (error) {
       console.error('Fehler beim Netzwerkaufruf', error);
     }
@@ -97,13 +90,10 @@ const NewsFeed = () => {
           ) : (
             messages.slice(-1000).map((message, index) => (
               <div className="message" key={index}>
-                {/* Hier können die Nachrichtenkomponenten gerendert werden */}
-                {/* <UserProfile username={message.username} /> */}
+               
                 <p>{message.content}</p>
                 <img src={message.MediaLink} alt="Uploaded" width='600px'/>
-                {/* {message.image && <img src={message.image} alt="Uploaded" />} */}
-                {/* {message.timestamp && <p>Posted at: {new Date(message.timestamp).toLocaleTimeString()}</p>} */}
-                {/* <Reactions reactions={message.reactions || []} /> */}
+
               </div>
             ))
           )}

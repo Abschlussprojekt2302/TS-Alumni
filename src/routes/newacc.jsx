@@ -26,19 +26,6 @@ const AccountErstellung = (props) => {
     } 
     navigate('/newsfeed'); // Weiterleitung zu Home
   };
-///  Doppelt (newsfeed.jsx)  ///
-  // const handleLogin = () => {
-  //   try {
-  //     const response = apiCall.post(api.lambda/getAllPosts);
-  //     if (response.status === 'ok') {
-  //       navigate('/newsfeed');
-  //     } else {
-  //       console.error('Fehler beim Anmelden.', response);
-  //     }
-  //    } catch (error) {
-  //       console.error('Fehler beim Abrufen von Google-Benutzerdaten. handleLogin', error);
-  //     }
-  //   };
 
   return (
     <div className="account-erstellung-container">
