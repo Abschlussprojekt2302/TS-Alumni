@@ -89,7 +89,7 @@ jobs:
         with:
           host: ${{ secrets.HOSTNAME }}
           username: ${{ secrets.SSH_USERNAME }}
-          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.SSH_PORT }}
           script: "whoami"
           debug: true
