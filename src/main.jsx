@@ -26,7 +26,7 @@ const router = createBrowserRouter([
     path: "/login/google",
     element: <LoginGoogle />,
   },
-  
+   
 ]);
 
 const container = document.getElementById('root');

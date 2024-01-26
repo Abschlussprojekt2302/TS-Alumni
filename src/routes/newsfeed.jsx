@@ -78,7 +78,7 @@ const NewsFeed = () => {
       setUploadedImage(reader.result);
     };
     reader.readAsDataURL(file);
-  };
+  }; 
 
   return (
     <div className="app">
