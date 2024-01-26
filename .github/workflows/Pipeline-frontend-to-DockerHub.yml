@@ -89,7 +89,16 @@ jobs:
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
           ssh -v -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
           mkdir -p /app
+          '
         env:
           PRIVATE_KEY: ${{ secrets.EC2_KEY }}
           USER_NAME: ${{ secrets.EC2_USER }}
           HOSTNAME: ${{ secrets.EC2_HOSTNAME }}
+          AWS_CLI_VERSION: 2
+          AWS_CLI_ARCH: amd64
+          VERBOSE: false
+          LIGHTSAILCTL: false
+          BINDIR: /usr/local/bin
+          INSTALLROOTDIR: /usr/local
+          ROOTDIR:
+          WORKDIR:
