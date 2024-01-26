@@ -114,7 +114,18 @@ body {
   border-color: var(--secondary-color);
 }
 
-.app .upload-button,
+.app .upload-button{  
+  cursor: pointer;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+  font-size: 0.9em;
+  font-family: inherit;
+  font-weight: bold;
+}
+
 .app button {
   cursor: pointer;
   background-color: var(--secondary-color);
