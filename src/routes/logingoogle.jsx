@@ -43,24 +43,29 @@ function LoginGoogle() {
       );
 
       const responseData = await responseToBackend.json();
-      console.log("data From backend login google",responseData)
+      console.log(responseData)
       
       setUserData(responseData);
-
-      ///   SessionData und UserID ins LocalStorage speichern ///
       var sessionData = responseData.sessionData;
+      
       localStorage.setItem("Session",sessionData );
+      
 
       var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
+
+      // Extract UserID from the parsed object
       var userID = existingUserMessage[0].UserID;
+      
+      // Log the UserID to the console
+      console.log("UserID:", userID);
       localStorage.setItem("UserID",userID );
 
        
       if (responseData.isNewUser === false) {
-        navigate("/newsfeed");
+        navigate("/newacc");
       }
       else {
-        navigate("/newacc");
+        navigate("/newsfeed");
       }
 
     } catch (error) {
