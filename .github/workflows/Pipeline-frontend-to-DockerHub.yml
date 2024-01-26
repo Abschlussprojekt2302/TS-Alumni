@@ -86,15 +86,6 @@ jobs:
 
       - name: SSH into EC2 instance
         run: |
-          cd ~/.ssh
-          chmod 400 "SSH-Abschlussproject.pem"
-          echo "[$(date -u)] Starting SSH connection..."
-          ssh -v -i "SSH-Abschlussproject.pem" root@ec2-3-125-155-152.eu-central-1.compute.amazonaws.com
-          if [ $? -eq 0 ]; then
-          echo "[$(date -u)] SSH connection successful"
-          else
-          echo "[$(date -u)] Error: Failed to establish SSH connection"
-          exit 1
-          fi
-
-      ####
+          echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
+          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          # Add your commands to execute
