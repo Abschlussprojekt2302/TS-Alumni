@@ -87,9 +87,8 @@ jobs:
       - name: SSH into EC2 instance and create /app directory
         run: |
           echo "$PRIVATE_KEY" > private_key && chmod 600 private_key
-          ssh -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
-            mkdir -p /app
-          '
+          ssh -v -o StrictHostKeyChecking=no -i private_key ${USER_NAME}@${HOSTNAME} '
+          mkdir -p /app
         env:
           PRIVATE_KEY: ${{ secrets.EC2_KEY }}
           USER_NAME: ${{ secrets.EC2_USER }}
