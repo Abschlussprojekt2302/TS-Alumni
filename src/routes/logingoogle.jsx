@@ -38,20 +38,29 @@ function LoginGoogle() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: responseFetch.user })
+          body: JSON.stringify( responseFetch)
         }
       );
 
       const responseData = await responseToBackend.json();
-      console.log("Response Data from Backend:", responseData);
+      console.log("data From backend login google",responseData)
+      
       setUserData(responseData);
-      localStorage.setItem("Session", JSON.stringify(responseData.sessionData));
 
-      if (responseData.isNewUser = false) {
-        navigate("/newacc");
+      ///   SessionData und UserID ins LocalStorage speichern ///
+      var sessionData = responseData.sessionData;
+      localStorage.setItem("Session",sessionData );
+
+      var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
+      var userID = existingUserMessage[0].UserID;
+      localStorage.setItem("UserID",userID );
+
+       
+      if (responseData.isNewUser === false) {
+        navigate("/newsfeed");
       }
       else {
-        navigate("/newsfeed");
+        navigate("/newacc");
       }
 
     } catch (error) {
