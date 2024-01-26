@@ -2,12 +2,11 @@
 # Erstellung des Container-Images für das Frontend
 # © 2024 Markus Rennings
 
-
 FROM node:alpine as build
 
 RUN <<EOF
 apk add git
-git clone https://github.com/ChriZZ2406/Abschlussprojekt-Front-Backend Frontend
+git clone https://github.com/Abschlussprojekt2302/TS-Alumni Frontend
 cd  Frontend
 npm ci
 npm run build
