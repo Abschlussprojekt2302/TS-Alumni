@@ -38,29 +38,33 @@ function LoginGoogle() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify( responseFetch)
+          body: JSON.stringify(responseFetch)
         }
       );
 
       const responseData = await responseToBackend.json();
-      console.log(responseData)
-      
+      console.log("data From backend login google", responseData)
+
       setUserData(responseData);
       var sessionData = responseData.sessionData;
-      
-      localStorage.setItem("Session",sessionData );
-      
+      localStorage.setItem("Session", sessionData);
 
-      var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
 
-      // Extract UserID from the parsed object
-      var userID = existingUserMessage[0].UserID;
-      
-      // Log the UserID to the console
-      console.log("UserID:", userID);
-      localStorage.setItem("UserID",userID );
 
-       
+
+      if (responseData.isNewUser === false) {
+        var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
+        var userID = existingUserMessage[0].UserID;
+        localStorage.setItem("UserID", userID);
+
+      }
+      else {
+        var data = JSON.parse(responseData.user);
+        var userID = data[0][0].UserID;
+        console.log("userID ",userID)
+        localStorage.setItem("UserID", userID);
+      }
+
       if (responseData.isNewUser === false) {
         navigate("/newacc");
       }
