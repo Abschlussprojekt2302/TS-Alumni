@@ -7,6 +7,7 @@ import Root from './routes/root';
 import LoginGoogle from './routes/logingoogle';
 import AccountErstellung from './routes/newacc';
 import NewsFeed from './routes/newsfeed';
+import Profil from './routes/profilepage';
 
 
 const router = createBrowserRouter([
@@ -25,6 +26,9 @@ const router = createBrowserRouter([
   {
     path: "/login/google",
     element: <LoginGoogle />,
+  },{
+    path: "/Profil",
+    element: <Profil />,
   },
    
 ]);

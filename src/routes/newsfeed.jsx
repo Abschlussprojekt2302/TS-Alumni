@@ -92,7 +92,7 @@ const NewsFeed = () => {
               <div className="message" key={index}>
                
                 <p>{message.content}</p>
-                <img src={message.MediaLink} alt="Uploaded" width='600px'/>
+                <img src={message.MediaLink}  width='600px'/>
 
               </div>
             ))

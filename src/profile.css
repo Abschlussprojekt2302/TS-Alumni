@@ -1,0 +1,44 @@
+.profile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 50%;
+  }
+  
+  .profile-header {
+    margin-top: 20px;
+  }
+  
+  .profile-header img {
+    width: 250px; /* Passen Sie die Größe des Profilbildes nach Bedarf an */
+    height: 250px;
+    border-radius: 50%;
+  }
+  
+  .profile-details {
+    margin-top: 20px;
+  }
+  
+  .profile-details div {
+    margin-bottom: 10px;
+  }
+  
+  .profile-details label {
+    display: block;
+    font-weight: bold;
+  }
+  
+  .profile-details input {
+    width: 200px; /* Passen Sie die Breite der Eingabefelder nach Bedarf an */
+    padding: 5px;
+    margin-top: 5px;
+  }
+  
+  .profile-details button {
+    padding: 8px 15px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
