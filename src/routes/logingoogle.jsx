@@ -69,8 +69,8 @@ function LoginGoogle() {
         navigate("/newacc");
       }
       else {
-        navigate("/newsfeed");
-      }
+        navigate("/newacc");
+      } 
 
     } catch (error) {
       console.error("Fehler beim Senden der Daten an das Backend.", error);
