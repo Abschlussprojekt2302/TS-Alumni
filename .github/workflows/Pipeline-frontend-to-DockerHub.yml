@@ -91,5 +91,8 @@ jobs:
           username: ${{ secrets.USER_NAME }}
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.PORT }}
-          script: whoami
-          debug: true
+          script: |
+            whoami
+            docker pull aws2302/aws2302:latest
+            docker run -d aws2302/aws2302:latest
+            debug: true
