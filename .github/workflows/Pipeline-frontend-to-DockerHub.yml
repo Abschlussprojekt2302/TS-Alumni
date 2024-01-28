@@ -109,12 +109,8 @@ jobs:
         if: steps.SSH_and_Docker_Workflow.outputs.exit_code == 0
         run: |
           echo "Login successful!"
-          if [[ ${{ steps.SSH_and_Docker_Workflow.outputs.stdout }} == *"Container status: 0"* ]]; then
+          if [[ "${{ steps.SSH_and_Docker_Workflow.outputs.stdout }}" == *"Container status: 0"* ]]; then
             echo "Image deployed and container running successfully."
           else
             echo "Image deployment or container execution failed. Please check logs."
           fi
-
-      - name: Handle Login Failure
-        if: steps.SSH_and_Docker_Workflow.outputs.exit_code != 0
-        run: echo "Login failed. Please investigate."
