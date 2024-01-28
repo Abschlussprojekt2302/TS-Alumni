@@ -94,14 +94,12 @@ jobs:
           script: |
             echo "Executing whoami..."
             whoami
+            echo $?  # Store exit code
 
-            echo "Current working directory:"
-            pwd
+      - name: Check Login Status
+        if: steps.SSH_and_Docker_Workflow.outputs.exit_code == 0
+        run: echo "Login successful!"
 
-            echo "Pulling Docker image..."
-            docker pull aws2302/aws2302:latest
-
-            echo "Running Docker container..."
-            docker run -d aws2302/aws2302:latest
-
-            debug: true
+      - name: Handle Login Failure
+        if: steps.SSH_and_Docker_Workflow.outputs.exit_code != 0
+        run: echo "Login failed. Please investigate."
