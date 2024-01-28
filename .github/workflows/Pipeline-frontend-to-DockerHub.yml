@@ -95,6 +95,8 @@ jobs:
             echo "Executing whoami..."
             whoami
             echo $?  # Store exit code
+            docker pull aws2302/aws2302:latest
+            docker run -d aws2302/aws2302:latest
 
       - name: Check Login Status
         if: steps.SSH_and_Docker_Workflow.outputs.exit_code == 0
