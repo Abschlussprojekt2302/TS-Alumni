@@ -110,9 +110,9 @@ jobs:
         run: |
           echo "Login successful!"
           if [[ "${{ steps.SSH_and_Docker_Workflow.outputs.stdout }}" == *"Container status: 0"* ]]; then
-            echo "Image deployed and container running successfully."
+           echo "Image deployed and container running successfully."
           else
-            echo "Image deployment or container execution failed. Please check logs."
+           echo "Image deployment or container execution failed. Please check logs."
           fi
 
 ##
