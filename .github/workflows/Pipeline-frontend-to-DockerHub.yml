@@ -92,9 +92,16 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.PORT }}
           script: |
+            echo "Executing whoami..."
             whoami
-            docker pull aws2302/aws2302:latest
-            docker run -d aws2302/aws2302:latest
-            debug: true
 
-####
+            echo "Current working directory:"
+            pwd
+
+            echo "Pulling Docker image..."
+            docker pull aws2302/aws2302:latest
+
+            echo "Running Docker container..."
+            docker run -d aws2302/aws2302:latest
+
+            debug: true
