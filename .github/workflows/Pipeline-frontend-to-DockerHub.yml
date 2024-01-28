@@ -92,29 +92,9 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            echo "Executing whoami..."
             whoami
-            echo "Pulling Docker image..."
             docker pull aws2302/aws2302:latest
-
-            echo "Running Docker container..."
             docker run -d aws2302/aws2302:latest
-          debug: true
+            debug: true
 
-      - name: Debugging information
-        run: |
-          echo "GitHub Environment Variables:"
-          env
-
-          echo "List Docker containers:"
-          docker ps -a
-
-          echo "List Docker images:"
-          docker images
-
-          echo "Check SSH connectivity to the host:"
-          ssh -o StrictHostKeyChecking=no -p ${{ secrets.PORT }} ${{ secrets.USER_NAME }}@${{ secrets.HOSTNAME }} echo "SSH connection successful"
-
-          echo "Check Docker version:"
-          docker version
-      ##
+##
