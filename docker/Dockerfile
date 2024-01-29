@@ -6,7 +6,7 @@ FROM node:alpine as build
 
 RUN <<EOF
 apk add git
-git clone https://github.com/Abschlussprojekt2302/TS-Alumni Frontend
+git clone https://github.com/Abschlussprojekt2302/TS-Alumni -b prod Frontend
 cd  Frontend
 npm ci
 npm run build
