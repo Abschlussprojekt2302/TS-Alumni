@@ -8,6 +8,7 @@ import LoginGoogle from './routes/logingoogle';
 import AccountErstellung from './routes/newacc';
 import NewsFeed from './routes/newsfeed';
 
+
 const router = createBrowserRouter([
   {
     path: "/",
@@ -25,14 +26,14 @@ const router = createBrowserRouter([
     path: "/login/google",
     element: <LoginGoogle />,
   },
-  
+   
 ]);
 
 const container = document.getElementById('root');
 const root = createRoot(container); // Erstellt Root
 
 root.render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <RouterProvider router={router} />
-  </React.StrictMode>
+  // </React.StrictMode>
 );
