@@ -17,8 +17,13 @@ const NewsFeed = () => {
           },
         });
         const data = await response.json();
-        if (data.status === 'ok') {
-          setMessages(data.posts);
+        if (data.status === 'ok' && data.posts) {
+        // Stelle sicher, dass jeder Post ein 'timestamp' Feld hat
+        const postsWithTimestamps = data.posts.map(post => ({
+          ...post,
+          timestamp: post.timestamp || new Date().toISOString() // Fallback auf die aktuelle Zeit, wenn kein Timestamp vorhanden ist
+        }));
+        setMessages(postsWithTimestamps); // Speichere die empfangenen Nachrichten mit Zeitstempeln
         } else {
           console.error('Fehler beim Abrufen der Nachrichten', data);
         }
