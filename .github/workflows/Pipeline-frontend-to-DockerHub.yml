@@ -85,7 +85,6 @@ jobs:
         run: aws s3 ls --region eu-central-1 --profile 048479317518_Student
 
       - name: SSH and Docker Workflow
-        id: SSH_and_Docker_Workflow
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: ${{ secrets.HOSTNAME }}
@@ -93,25 +92,11 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            echo "Executing whoami..."
-            whoami
-            echo $?  # Store exit code
-            echo "Pulling Docker image..."
-            docker pull aws2302/aws2302:latest
-            echo "Image pull status: $?"
-            echo "Running Docker container..."
-            docker run -d aws2302/aws2302:latest
-            echo "Container run status: $?"
+            # Check for running containers
             docker ps | grep aws2302
-            echo "Container status: $?"
+            echo "Running containers:"
+            docker ps
 
-      - name: Check Login and Deployment Status
-        if: steps.SSH_and_Docker_Workflow.outputs.exit_code == 0
-        run: |
-          if [[ "${{ steps.SSH_and_Docker_Workflow.outputs.stdout }}" == *"Container status: 0"* ]]; then
-           echo "Image deployed and container running successfully."
-          else
-           echo "Image deployment or container execution failed. Please check logs."
-          fi
-
-##
+            # Store container ID for later use
+            CONTAINER_ID=$(docker ps -q -f name=aws2302)
+            echo "Container ID: $CONTAINER_ID"
