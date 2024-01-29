@@ -98,7 +98,7 @@ jobs:
             echo "** Pulling latest image..."
             docker pull aws2302/aws2302:latest
             echo "** Running new container..."
-            docker run -d aws2302/aws2302:latest
+            docker run --name frontend -d -p 80:80 -i aws2302/aws2302:latest
 
       - name: Check container status (optional)
         uses: appleboy/ssh-action@v1.0.3
