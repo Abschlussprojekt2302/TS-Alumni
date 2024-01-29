@@ -92,11 +92,25 @@ jobs:
           key: ${{ secrets.EC2_KEY }}
           port: ${{ secrets.PORT }}
           script: |
-            # Check for running containers
+            echo "** Checking for existing container..."
             docker ps | grep aws2302
-            echo "Running containers:"
-            docker ps
+            echo "** Pulling latest image..."
+            docker pull aws2302/aws2302:latest
+            echo "** Stopping existing container (if running)..."
+            docker stop aws2302 || true  # Ignore errors if not running
+            echo "** Removing existing container (if exists)..."
+            docker rm aws2302 || true  # Ignore errors if not exists
+            echo "** Running new container..."
+            docker run -d aws2302/aws2302:latest
+            echo "** Verifying new container health..."
+            docker inspect aws2302  # Check container status and logs for errors
 
-            # Store container ID for later use
-            CONTAINER_ID=$(docker ps -q -f name=aws2302)
-            echo "Container ID: $CONTAINER_ID"
+      - name: Check container status (optional)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker inspect aws2302
