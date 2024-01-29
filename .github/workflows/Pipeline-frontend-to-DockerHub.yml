@@ -99,9 +99,6 @@ jobs:
             docker pull aws2302/aws2302:latest
             echo "** Running new container..."
             docker run -d aws2302/aws2302:latest
-            echo "** Verifying new container health..."
-            docker inspect e5fad1b93f49  # Check container status and logs for errors
-             docker inspect 1a1e9be39043
 
       - name: Check container status (optional)
         uses: appleboy/ssh-action@v1.0.3
@@ -112,3 +109,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             docker ps
+
+    ##
