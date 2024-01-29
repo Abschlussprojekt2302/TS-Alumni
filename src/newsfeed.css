@@ -1,42 +1,76 @@
-/* Flex-Container spezifisch für newsfeed */
+:root {
+  /* Darkmode Farbvariablen */
+  --primary-background-color: #242424; /* Dunkler Hintergrund */
+  --text-color: #ffffff; /* Heller Text */
+  --secondary-color: #646cff; /* Sekundäre Farbe für Hover-Effekte und Buttons */
+  --message-background-color: #333333; /* Dunkler Hintergrund für Nachrichten */
+  --info-color: #999999; /* Farbe für Nutzerinformationen */
+}
+
+/* Webkit-basierte Browser (Chrome, Safari) */
+::-webkit-scrollbar {
+  width: 10px; /* Breite der Scrollleiste */
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: gray; /* Hintergrundfarbe des Scroll-Thumb (der graue Teil) */
+  border-radius: 5px; /* Abgerundete Ecken des Scroll-Thumbs */
+}
+
+/* Firefox */
+body {
+  scrollbar-width: thin;
+  scrollbar-color: gray;
+}
+
 .app {
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start; /* Logo am Anfang des Containers ausrichten */
   align-items: center;
-  height: 100vh;
+  min-height: 100vh; /* Mindesthöhe statt fester Höhe */
   background-color: var(--primary-background-color);
-  /* Verwendung der Variable aus index.css*/
+  padding-top: 2rem; /* Platz oben im Container hinzufügen */
 }
 
 /* Stile spezifisch innerhalb des .app Containers */
 .app .logo {
-  height: 100px;
-  width: auto;
+  height: auto; /* passt die Höhe an das Bild an, sofern das Logo als img-Tag eingebunden ist */
+  max-height: 100px; /* maximale Höhe, um das Logo zu beschränken */
+  width: auto; /* behält das Seitenverhältnis des Logos bei */
   padding: 1.5em;
+  margin-top: 1rem; /* Geben Sie hier zusätzlichen Platz nach Bedarf */
   margin-bottom: 2rem;
   will-change: filter;
   transition: filter 300ms;
 }
 
 .app .chat {
-  width: 300px;
-  padding: 20px;
+  width: 1000px;
+  padding: 100px;
   box-shadow: none;
-  /* Entfernen des Schattens */
+}
+
+/*Timestap*/
+.app .message .timestamp {
+  display: block; /* Oder 'inline-block' je nach gewünschtem Layout */
+  color: var(--info-color); /* Farbe der Uhrzeit */
+  font-size: 0.8em; /* Größe der Uhrzeit */
+  margin-top: 0.5rem; /* Abstand oben von der Nachricht */
 }
 
 .app body {
   font-family: 'Caviar Dreams', sans-serif;
+  color: var(--text-color); /* Heller Text für den Darkmode */
 }
 
 .app .message {
-  background-color: #ffff66;
-  color: darkblue;
+  background-color: var(--message-background-color); /* Dunkler Hintergrund für Nachrichten */
+  color: var(--text-color); /* Heller Text */
 }
 
 .app .user-info {
-  color: darkblue;
+  color: var(--info-color); /* Farbe für Nutzerinformationen */
 }
 
 .app .messages {
@@ -50,8 +84,8 @@
   margin-bottom: 15px;
   padding: 10px;
   border-radius: 10px;
-  background-color: #f0f0f0;
-  color: darkblue;
+  background-color: var(--message-background-color);
+  color: var(--text-color);
   margin-right: 50px;
   border: none;
   overflow: hidden;
@@ -61,18 +95,16 @@
   align-self: flex-end;
   margin-right: 5px;
   font-size: 0.8em;
-  color: #999;
+  color: var(--info-color);
 }
 
 .app .input-container {
   display: flex;
   align-items: center;
   margin-top: 10px;
-  background: #242424;
-  /* Huntergrundfarbe */
+  background: var(--primary-background-color);
   padding: 10px;
   border-radius: 8px;
-  /* für abgerundete Ecken */
 }
 
 .app input[type='text'] {
@@ -80,61 +112,38 @@
   padding: 5px;
   background: transparent;
   border: 1px solid transparent;
-  /* leichter Rahmen um das Textfeld */
-  color: white;
-  /* text */
+  color: var(--text-color);
   margin-right: 5px;
-  transition: boarder-color 0.3s ease;
-  /* sanfter Übergang für Effekte */
+  transition: border-color 0.3s ease;
   border-radius: 4px;
-}
-
-.app input[type='text'] {
-  flex: 1;
-  padding: 5px;
-  background: transparent;
-  border: 1px solid transparent;
-  /* Standardmäßig transparenter Rahmen */
-  color: white;
-  /* ... */
-  margin-right: 5px;
-  transition: border-color 0.25s;
-  /* Transition für den Hover-Effekt */
 }
 
 .app input[type='text']:hover {
-  border-color: #646cff;
-  /* Rahmenfarbe beim Hover */
-  /* Keine Hintergrundänderung erforderlich, da Sie nur den Rahmen wollen */
+  border-color: var(--secondary-color);
 }
 
-.app .upload-button {
+.app .upload-button{  
   cursor: pointer;
-  background-color: #646cff;
-  color: white;
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
-  font-size: 1em;
-  /* Gleiche Schriftgröße wie der "Send" Button */
+  font-size: 0.9em;
   font-family: inherit;
-  /* Gleiche Schriftart wie der "Send" Button */
-  /* Anpassung der Größe */
-  width: auto;
-  white-space: nowrap; /* Einzeiliger Text */
   font-weight: bold;
 }
 
 .app button {
   cursor: pointer;
-  background-color: #646cff;
-  /* Button-Hintergrundfarbe */
-  color: white;
-  /* Button-Textfarbe */
+  background-color: var(--secondary-color);
+  color: var(--text-color);
   border: none;
   padding: 5px 10px;
   border-radius: 4px;
-  /* Optional: für abgerundete Ecken */
+  font-size: 1em;
+  font-family: inherit;
+  font-weight: bold;
 }
 
 .app .upload-button {
@@ -144,7 +153,7 @@
 .app .download-button {
   padding: 5px 10px;
   background-color: #4caf50;
-  color: #fff;
+  color: var(--text-color);
   border: none;
   cursor: pointer;
   content: "\2B06";
