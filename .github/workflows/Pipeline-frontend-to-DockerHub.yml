@@ -38,12 +38,6 @@ jobs:
         run: |
           echo "[$(date -u)] Tagging Docker image..."
           docker tag aws2302/aws2302:latest "${{ secrets.DOCKERHUB_USERNAME }}/aws2302:latest"
-          if [ $? -eq 0 ]; then
-            echo "[$(date -u)] Tagged Docker image successfully"
-          else
-            echo "[$(date -u)] Error: Failed to tag Docker image"
-            exit 1
-          fi
 
       - name: Push Docker image
         run: |
