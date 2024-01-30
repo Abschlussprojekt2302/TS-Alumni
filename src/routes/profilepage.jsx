@@ -327,7 +327,7 @@ const Profile = () => {
                 <div className="search-bar">
                     <input
                         type="text"
-                        placeholder="Enter User ID..."
+                        placeholder="Search..."
                         className="search-bar-input"
                         value={userId}
                         onChange={(e) => setUserId(e.target.value)}
