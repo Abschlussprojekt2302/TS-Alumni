@@ -46,8 +46,6 @@ function LoginGoogle() {
       console.log("data From backend login google", responseData)
 
       setUserData(responseData);
-
-      ///   SessionData und UserID ins LocalStorage speichern ///
       var sessionData = responseData.sessionData;
       localStorage.setItem("Session", sessionData);
 

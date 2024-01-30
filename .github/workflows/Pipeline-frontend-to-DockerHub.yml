@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Dockerhub
 on:
   push:
     branches:
-      - main
+      - pipeline
 
 jobs:
   build-and-push:
@@ -84,4 +84,28 @@ jobs:
       - name: List S3 Buckets
         run: aws s3 ls --region eu-central-1 --profile 048479317518_Student
 
-        ##
+      - name: SSH and Docker Workflow
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            echo "** Checking for existing container..."
+            docker ps | grep aws2302
+            docker stop $(docker ps --no-trunc -aq 2>/dev/null) || true
+            echo "** Pulling latest image..."
+            docker pull aws2302/aws2302:latest
+            echo "** Running new container..."
+            docker run --name frontend -d -p 80:80 -i aws2302/aws2302:latest
+
+      - name: Check container status (optional)
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ secrets.HOSTNAME }}
+          username: ${{ secrets.USER_NAME }}
+          key: ${{ secrets.EC2_KEY }}
+          port: ${{ secrets.PORT }}
+          script: |
+            docker ps
