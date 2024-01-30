@@ -1,152 +1,306 @@
-:root {
-  /* Darkmode Farbvariablen */
-  --primary-background-color: #242424; /* Dunkler Hintergrund */
-  --text-color: #ffffff; /* Heller Text */
-  --secondary-color: #646cff; /* Sekundäre Farbe für Hover-Effekte und Buttons */
-  --message-background-color: #333333; /* Dunkler Hintergrund für Nachrichten */
-  --info-color: #999999; /* Farbe für Nutzerinformationen */
+/* Header Styles */
+.appnewsfeed .header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  background-color: #010b1f;
+  z-index: 1000;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5em;
+  height: 3%;
 }
 
-/* Webkit-basierte Browser (Chrome, Safari) */
-::-webkit-scrollbar {
-  width: 10px; /* Breite der Scrollleiste */
+/* Logo Container Styles */
+.appnewsfeed .logo-container {
+  display: flex;
+  align-items: center;
+  margin-top: 2%;
 }
 
-::-webkit-scrollbar-thumb {
-  background-color: gray; /* Hintergrundfarbe des Scroll-Thumb (der graue Teil) */
-  border-radius: 5px; /* Abgerundete Ecken des Scroll-Thumbs */
+/* Logo Styles */
+.appnewsfeed .logo {
+  height: 60px;
+  width: auto;
+  margin-right: 10px;
 }
 
-/* Firefox */
-body {
-  scrollbar-width: thin;
-  scrollbar-color: gray;
+/* Search Bar Styles */
+.appnewsfeed .search-bar {
+  display: flex;
+  align-items: center;
+  background-color: #fff;
+  border-radius: 20px;
+  padding: 5px 10px;
+  margin: 0 20px;
 }
 
-.app {
+/* Search Input Styles */
+.appnewsfeed .search-bar input {
+  flex: 1;
+  border: none;
+  outline: none;
+  padding: 8px;
+  font-size: 14px;
+}
+
+/* Search Button Styles */
+.appnewsfeed .search-bar button {
+  background-color: #4285f4;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  padding: 8px 15px;
+  margin-left: 10px;
+  cursor: pointer;
+  font-size: 14px;
+}
+
+/* User Info Container Styles */
+.appnewsfeed .user-info-container {
+  display: flex;
+  align-items: center;
+}
+
+/* User Photo Styles */
+.appnewsfeed .user-photo img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+/* User Details Styles */
+.appnewsfeed .user-details p {
+  margin: 0;
+  color: white;
+}
+
+/* Dropdown Container Styles */
+.appnewsfeed .dropdown-container {
+  position: relative;
+  display: inline-block;
+}
+
+/* Dropdown Content Styles */
+.appnewsfeed .dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #363535;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  z-index: 1;
+  border-radius: 4px;
+}
+
+/* Hover Effect for Dropdown Container */
+.appnewsfeed .dropdown-container:hover .dropdown-content {
+  display: block;
+}
+
+/* Menu Item Styles */
+.appnewsfeed .menu-item {
+  padding: 12px;
+  text-decoration: none;
+  color: #6f5bdf;
+  display: block;
+}
+
+/* Hover Effect for Menu Item */
+.appnewsfeed .menu-item:hover {
+  background-color: #242424;
+}
+
+/* App Styles */
+.appnewsfeed .app {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-start;
+}
+
+/* Chat Container Styles */
+.appnewsfeed .chat-container {
+  margin-top: 60px;
+  margin-bottom: 40px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start; /* Logo am Anfang des Containers ausrichten */
   align-items: center;
-  min-height: 100vh; /* Mindesthöhe statt fester Höhe */
-  background-color: var(--primary-background-color);
-  padding-top: 2rem; /* Platz oben im Container hinzufügen */
+  color: #040303;;
 }
 
-/* Stile spezifisch innerhalb des .app Containers */
-.app .logo {
-  height: auto; /* passt die Höhe an das Bild an, sofern das Logo als img-Tag eingebunden ist */
-  max-height: 100px; /* maximale Höhe, um das Logo zu beschränken */
-  width: auto; /* behält das Seitenverhältnis des Logos bei */
-  padding: 1.5em;
-  margin-top: 1rem; /* Geben Sie hier zusätzlichen Platz nach Bedarf */
-  margin-bottom: 2rem;
-  will-change: filter;
-  transition: filter 300ms;
+/* Posts Container Styles */
+.appnewsfeed .Posts-container {
+  width: 100%;
+  max-width: 800px;
+  padding: 20px;
+  background-color: #242424; 
+  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+  margin-bottom: 20px;
 }
 
-.app .chat {
-  width: 1000px;
-  padding: 100px;
-  box-shadow: none;
-}
-
-.app body {
-  font-family: 'Caviar Dreams', sans-serif;
-  color: var(--text-color); /* Heller Text für den Darkmode */
-}
-
-.app .message {
-  background-color: var(--message-background-color); /* Dunkler Hintergrund für Nachrichten */
-  color: var(--text-color); /* Heller Text */
-}
-
-.app .user-info {
-  color: var(--info-color); /* Farbe für Nutzerinformationen */
-}
-
-.app .messages {
-  height: 600px;
-  overflow-y: auto;
-}
-
-.app .message {
-  position: relative;
-  max-width: 70%;
-  margin-bottom: 15px;
-  padding: 10px;
-  border-radius: 10px;
-  background-color: var(--message-background-color);
-  color: var(--text-color);
-  margin-right: 50px;
-  border: none;
-  overflow: hidden;
-}
-
-.app .user-info {
-  align-self: flex-end;
-  margin-right: 5px;
-  font-size: 0.8em;
-  color: var(--info-color);
-}
-
-.app .input-container {
+/* User Message Styles */
+.appnewsfeed .message .user {
   display: flex;
   align-items: center;
-  margin-top: 10px;
-  background: var(--primary-background-color);
+  margin-bottom: 10px;
+}
+
+.appnewsfeed .message {
+  background-color: #5e5e5e;
+}
+
+/* User Message Image Styles */
+.appnewsfeed .message .user img {
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+/* User Message Paragraph Styles */
+.appnewsfeed .message .user p {
+  color: darkblue;
+  margin: 0;
+}
+
+.appnewsfeed .message .user a {
+  color: #242424;
+  margin: 0;
+}
+
+/* Comment Styles */
+.appnewsfeed .comment .commentuser {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+/* Comment User Image Styles */
+.appnewsfeed .comment .commentuser img {
+  margin-right: 10px;
+  border-radius: 50%;
+}
+
+/* Space Between Styles */
+.appnewsfeed .space-between {
+  margin-right: 10px;
+  display: inline-block;
+}
+
+/* Comment User Paragraph Styles */
+.appnewsfeed .comment .commentuser p {
+  margin: 0;
+  color: darkblue;
+  white-space: nowrap;
+}
+
+/* Comment User Anchor Styles */
+.appnewsfeed .comment .commentuser a {
+  color: #242424;
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Comment Text Paragraph Styles */
+.appnewsfeed .comment .comment-text p {
+  margin: 0;
+  white-space: nowrap;
+}
+
+/* Comment User Strong Styles */
+.appnewsfeed .comment .commentuser strong {
+  margin-right: 10px;
+}
+
+/* Post Media Styles */
+.appnewsfeed .message .post-media {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Input Container Styles */
+.appnewsfeed .input-container {
+  position: fixed;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  background: #bdbdbd;
+  opacity: 90%;
   padding: 10px;
   border-radius: 8px;
+  border-color: #333;
+  display: flex;
+  align-items: center;
 }
 
-.app input[type='text'] {
+/* Textarea Styles */
+.appnewsfeed textarea {
   flex: 1;
-  padding: 5px;
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--text-color);
-  margin-right: 5px;
-  transition: border-color 0.3s ease;
+  padding: 10px;
+  margin-right: 10px;
+  border: 1px solid #0805d0;
+  border-radius: 4px;
+  resize: none;
+}
+
+/* Send and Upload Button Styles */
+.appnewsfeed .send-button,
+.appnewsfeed .upload-button {
+  cursor: pointer;
+  background-color: #646cff;
+  color: white;
+  border: none;
+  padding: 10px;
   border-radius: 4px;
 }
 
-.app input[type='text']:hover {
-  border-color: var(--secondary-color);
+/* Comments Container Styles */
+.appnewsfeed .comments-container {
+  margin-right: 90%;
 }
 
-.app .upload-button{  
+/* Comment Button Styles */
+.appnewsfeed .comment-button {
+  margin-left: 80%;
   cursor: pointer;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 0.9em;
-  font-family: inherit;
-  font-weight: bold;
 }
 
-.app button {
-  cursor: pointer;
-  background-color: var(--secondary-color);
-  color: var(--text-color);
-  border: none;
-  padding: 5px 10px;
-  border-radius: 4px;
-  font-size: 1em;
-  font-family: inherit;
-  font-weight: bold;
+/* Comments Input Styles */
+.appnewsfeed .comments-input {
+  display: flex;
+  align-items: center;
 }
 
-.app .upload-button {
-  float: left;
+/* Comments Input Textarea Styles */
+.appnewsfeed .comments-input input {
+  margin-left: 350%;
+  height: 35px;
+  border-radius: 5px;
 }
 
-.app .download-button {
-  padding: 5px 10px;
-  background-color: #4caf50;
-  color: var(--text-color);
+/* Comments Input Button Styles */
+.appnewsfeed .comments-input button {
+  height: 40px;
   border: none;
-  cursor: pointer;
-  content: "\2B06";
+  border-radius: 5px;
+  margin-bottom: 5px;
+}
+
+/* Media Query for Small Screens */
+@media screen and (max-width: 600px) {
+  .appnewsfeed .app .input-container {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .appnewsfeed .app .sidebar {
+    display: none;
+  }
+  .appnewsfeed .comment-button {
+    margin-left: 70%;
+  }
+  .appnewsfeed .comments-container {
+    margin-left: 10%;
+  }
+  .appnewsfeed .search-bar {
+    display: none;
+  }
 }
