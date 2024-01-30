@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Dockerhub
 on:
   push:
     branches:
-      - pipeline
+      - prod
 
 jobs:
   build-and-push:
