@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Dockerhub
 on:
   push:
     branches:
-      - prod
+      - pipeline
 
 jobs:
   build-and-push:
@@ -20,7 +20,7 @@ jobs:
         id: build-image
         run: |
           ls -la
-          docker build --no-cache -t aws2302/aws2302 -f docker/Dockerfile $GITHUB_WORKSPACE
+          docker build -t aws2302/aws2302 -f docker/Dockerfile $GITHUB_WORKSPACE
           echo "::set-output name=image-name::aws2302/aws2302"
 
       - name: Login to Docker Hub
@@ -98,4 +98,4 @@ jobs:
             echo "** Running new container..."
             docker run --name frontend -d -p 80:80 -i aws2302/aws2302:latest
 
-        #####
+####
