@@ -242,7 +242,7 @@ const NewsFeed = () => {
 
   return (
 
-    <div className="app">
+    <div className="appnewsfeed">
       <div className="header">
         <div className="logo-container">
           <img src="https://cdn.discordapp.com/attachments/1195301143161606205/1195301598507827240/techst_logo_rz_white.png?ex=65b37e5c&is=65a1095c&hm=951cba6cabd865ab2f4e7c4fd8e295c18bb4f3b9a3474d434849184a84fcbd48&" alt="Logo" className="logo" />
@@ -282,7 +282,7 @@ const NewsFeed = () => {
                   </a>
                   <div className="space-between"></div>
                   <p >
-                    <strong>{post.CreatedAt}</strong>
+                    {post.CreatedAt}
                   </p>
                 </div>
                 <div className="post">
@@ -311,7 +311,7 @@ const NewsFeed = () => {
                                 <strong>{commentRealNames[comment.UserID]}</strong>
                               </a>
                               <p >
-                                <strong>{comment.CreatedAt}</strong>
+                                {comment.CreatedAt}
                               </p>
                             </div>
                             <div className="comment-text">
