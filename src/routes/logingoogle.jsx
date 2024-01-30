@@ -20,6 +20,7 @@ function LoginGoogle() {
       return null;
     }
   };
+  
 
   const sendDataToBackend = async (googleData, accessToken) => {
     setIsLoading(true);
