@@ -232,8 +232,24 @@ textarea {
   border-radius: 5px;
   margin-bottom: 5px;
 }
-
-
+.nicht {
+  display: none;
+}
+.sidebar {
+  position: fixed;
+  top: 8cap;
+  left: 0;
+  bottom: 0;
+  width: auto;
+  
+  overflow-y: auto;
+  z-index: 1000;
+}
+.logos{
+  width: 60px;
+  border-radius: 10px;
+  margin-top: 2cap;
+}
 @media screen and (max-width: 600px) {
   .app .input-container {
     flex-direction: column;
