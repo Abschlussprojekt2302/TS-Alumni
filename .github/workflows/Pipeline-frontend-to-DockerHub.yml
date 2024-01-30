@@ -38,12 +38,6 @@ jobs:
         run: |
           echo "[$(date -u)] Tagging Docker image..."
           docker tag aws2302/aws2302:latest "${{ secrets.DOCKERHUB_USERNAME }}/aws2302:latest"
-          if [ $? -eq 0 ]; then
-            echo "[$(date -u)] Tagged Docker image successfully"
-          else
-            echo "[$(date -u)] Error: Failed to tag Docker image"
-            exit 1
-          fi
 
       - name: Push Docker image
         run: |
@@ -93,19 +87,13 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             echo "** Checking for existing container..."
-            docker ps | grep aws2302
-            docker stop $(docker ps --no-trunc -aq 2>/dev/null) || true
+            CONTAINER_ID=$(docker ps -aqf "name=frontend")
+            if [ -n "$CONTAINER_ID" ]; then
+             echo "** Stopping and removing existing container..."
+             docker stop "$CONTAINER_ID"
+             docker rm "$CONTAINER_ID"
+            fi
             echo "** Pulling latest image..."
             docker pull aws2302/aws2302:latest
             echo "** Running new container..."
             docker run --name frontend -d -p 80:80 -i aws2302/aws2302:latest
-
-      - name: Check container status (optional)
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: ${{ secrets.HOSTNAME }}
-          username: ${{ secrets.USER_NAME }}
-          key: ${{ secrets.EC2_KEY }}
-          port: ${{ secrets.PORT }}
-          script: |
-            docker ps
