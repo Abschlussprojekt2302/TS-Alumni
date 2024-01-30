@@ -309,7 +309,7 @@ const Profile = () => {
       };
     return (
 
-        <div className="app">
+        <div className="appprofile">
             <div className="sidebar">
                 <Sidebar >
                     <Menu>
