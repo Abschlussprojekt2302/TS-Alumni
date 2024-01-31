@@ -1,39 +1,79 @@
-import { useState, useEffect } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { useNavigate } from 'react-router-dom';
 
 function LoginGoogle() {
   const [userData, setUserData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
-  const navigate = useNavigate(); // Verwenden von useNavigate
+  const navigate = useNavigate();
 
-  // Funktion zum Transformieren und Senden von Daten an das Backend
-  const sendDataToBackend = async (accessToken) => {
-    setIsLoading(true);
+  const fetchGoogleUserData = async (accessToken) => {
     try {
       const response = await fetch(
+        "https://www.googleapis.com/oauth2/v3/userinfo",
+        { headers: { Authorization: `Bearer ${accessToken}` } }
+      );
+      const data = await response.json();
+      console.log("Google Data:", data);
+      return data;
+    } catch (error) {
+      console.error("Fehler beim Abrufen von Google-Benutzerdaten.", error);
+      return null;
+    }
+  };
+
+  const sendDataToBackend = async (googleData, accessToken) => {
+    setIsLoading(true);
+    try {
+      const response = await fetch('https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/login/googlefetch', {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ accessToken: accessToken })
+      });
+
+      const responseFetch = await response.json();
+      console.log("responseData from googlefetch", responseFetch);
+
+      const responseToBackend = await fetch(
         "https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/login/google",
         {
           method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ accessToken: accessToken }),
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(responseFetch)
         }
       );
-      const responseData = await response.json();
 
-      localStorage.setItem("Session", JSON.stringify(responseData.sessionData));
+      const responseData = await responseToBackend.json();
+      console.log("data From backend login google", responseData)
 
-      if (responseData.isNewUser) {
-        navigate("/newacc");
-      } else {
-        navigate("/newsfeed");
+      setUserData(responseData);
+      var sessionData = responseData.sessionData;
+      localStorage.setItem("Session", sessionData);
+
+
+
+
+      if (responseData.isNewUser === false) {
+        var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
+        var userID = existingUserMessage[0].UserID;
+        localStorage.setItem("UserID", userID);
+
+      }
+      else {
+        var data = JSON.parse(responseData.user);
+        var userID = data[0][0].UserID;
+        console.log("userID ",userID)
+        localStorage.setItem("UserID", userID);
       }
 
-      console.log("Response Data from Backend:", responseData);
-      setUserData(responseData);
+      if (responseData.isNewUser === false) {
+        navigate("/newsfeed");
+      }
+      else {
+        navigate("/newacc");
+      } 
+
     } catch (error) {
-      console.error("Fehler beim Abruf der Daten.", error);
+      console.error("Fehler beim Senden der Daten an das Backend.", error);
     } finally {
       setIsLoading(false);
     }
@@ -43,7 +83,11 @@ function LoginGoogle() {
     let queryParams = new URLSearchParams(window.location.hash.substring(1));
     const accessToken = queryParams.get("access_token");
     if (accessToken) {
-      sendDataToBackend(accessToken);
+      fetchGoogleUserData(accessToken).then((googleData) => {
+        if (googleData) {
+          sendDataToBackend(googleData, accessToken);
+        }
+      });
     }
   }, []);
 
@@ -51,7 +95,6 @@ function LoginGoogle() {
     return <div>Lädt...</div>;
   }
 
-  // Wenn keine Benutzerdaten vorhanden sind, wird eine Nachricht angezeigt.
   if (!userData || !userData.email) {
     return (
       <div>
@@ -60,7 +103,6 @@ function LoginGoogle() {
     );
   }
 
-  // Keine Notwendigkeit für einen weiteren Render-Block, da die Weiterleitung oben gehandhabt wird.
   return null;
 }
 

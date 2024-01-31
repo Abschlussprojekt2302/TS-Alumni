@@ -3,7 +3,7 @@ name: Build and Push Docker Image to Dockerhub
 on:
   push:
     branches:
-      - pipeline
+      - main
 
 jobs:
   build-and-push:
@@ -98,4 +98,4 @@ jobs:
             echo "** Running new container..."
             docker run --name frontend -d -p 80:80 -i aws2302/aws2302:latest
 
-####
+        #####
