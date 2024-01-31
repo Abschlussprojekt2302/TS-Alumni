@@ -262,7 +262,7 @@ const NewsFeed = () => {
   }
   const handelpostid = (index, postid) => {
     setPostId(postid);
-    fetchComments();
+    
 
   }
   
