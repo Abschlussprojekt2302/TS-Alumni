@@ -19,8 +19,7 @@ jobs:
       - name: Build Docker Image
         id: build-image
         run: |
-          ls -la
-          docker build -t aws2302/aws2302 -f docker/Dockerfile $GITHUB_WORKSPACE
+          docker build -t aws2302/aws2302 -f docker/Dockerfile $GITHUB_WORKSPACE/docker
           echo "::set-output name=image-name::aws2302/aws2302"
 
       - name: Login to Docker Hub
