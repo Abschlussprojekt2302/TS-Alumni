@@ -369,7 +369,7 @@ const NewsFeed = () => {
                   <img src={post.MediaLink} className="post-media" />
                 </div>
                 <div className="comment-button" onClick={() => handleToggle(index, post.id)}>
-                  <p>Comments {Commentscount}</p>
+                  <p>Comments </p>
                 </div>
                 {showComments === index && (
                   <div className="comments-container">
