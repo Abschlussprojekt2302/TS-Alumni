@@ -283,6 +283,7 @@ color: #010b1f;
     align-items: stretch;
   }
   .appprofile .sidebar {
+
     display: none;
   }
   .appprofile .comment-button {

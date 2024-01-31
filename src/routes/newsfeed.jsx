@@ -359,7 +359,7 @@ const NewsFeed = () => {
                   </a>
                   <div className="space-between"></div>
                   <p >
-                    <strong>{post.CreatedAt}</strong>
+                    {post.CreatedAt}
                   </p>
                 </div>
                 <div className="post">
@@ -388,7 +388,7 @@ const NewsFeed = () => {
                                 <strong>{commentRealNames[comment.UserID]}</strong>
                               </a>
                               <p >
-                                <strong>{comment.CreatedAt}</strong>
+                                {comment.CreatedAt}
                               </p>
                             </div>
                             <div className="comment-text">
