@@ -4,7 +4,7 @@
   top: 0;
   left: 0;
   right: 0;
-  background-color: #010b1f;
+  background-color: #010b1f !important;
   z-index: 1000;
   display: flex;
   justify-content: space-between;
@@ -31,7 +31,7 @@
 .appnewsfeed .search-bar {
   display: flex;
   align-items: center;
-  background-color: #fff;
+  background-color: #fff !important;
   border-radius: 20px;
   padding: 5px 10px;
   margin: 0 20px;
@@ -48,8 +48,8 @@
 
 /* Search Button Styles */
 .appnewsfeed .search-bar button {
-  background-color: #4285f4;
-  color: #fff;
+  background-color: #4285f4 !important;
+  color: #fff !important;
   border: none;
   border-radius: 5px;
   padding: 8px 15px;
@@ -75,7 +75,7 @@
 /* User Details Styles */
 .appnewsfeed .user-details p {
   margin: 0;
-  color: white;
+  color: white !important;
 }
 
 /* Dropdown Container Styles */
@@ -88,7 +88,7 @@
 .appnewsfeed .dropdown-content {
   display: none;
   position: absolute;
-  background-color: #363535;
+  background-color: #363535 !important;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   z-index: 1;
   border-radius: 4px;
@@ -103,13 +103,13 @@
 .appnewsfeed .menu-item {
   padding: 12px;
   text-decoration: none;
-  color: #6f5bdf;
+  color: #6f5bdf !important;
   display: block;
 }
 
 /* Hover Effect for Menu Item */
 .appnewsfeed .menu-item:hover {
-  background-color: #242424;
+  background-color: #242424 !important;
 }
 
 /* App Styles */
@@ -126,7 +126,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  color: #040303;;
+  color: #040303 !important;
 }
 
 /* Posts Container Styles */
@@ -134,8 +134,7 @@
   width: 100%;
   max-width: 800px;
   padding: 20px;
-  background-color: #242424; 
-  /*box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);*/
+  background-color: #242424 !important;
   margin-bottom: 20px;
 }
 
@@ -147,7 +146,7 @@
 }
 
 .appnewsfeed .message {
-  background-color: #5e5e5e;
+  background-color: #979494 !important;
 }
 
 /* User Message Image Styles */
@@ -158,12 +157,12 @@
 
 /* User Message Paragraph Styles */
 .appnewsfeed .message .user p {
-  color: darkblue;
+  color: darkblue !important;
   margin: 0;
 }
 
 .appnewsfeed .message .user a {
-  color: #242424;
+  color: #242424 !important;
   margin: 0;
 }
 
@@ -189,13 +188,13 @@
 /* Comment User Paragraph Styles */
 .appnewsfeed .comment .commentuser p {
   margin: 0;
-  color: darkblue;
+  color: darkblue !important;
   white-space: nowrap;
 }
 
 /* Comment User Anchor Styles */
 .appnewsfeed .comment .commentuser a {
-  color: #242424;
+  color: #242424 !important;
   margin: 0;
   white-space: nowrap;
 }
@@ -223,8 +222,8 @@
   bottom: 0;
   left: 20%;
   right: 20%;
-  background: #bdbdbd;
-  opacity: 90%;
+  background: rgba(230, 230, 230, 0.934) !important;
+  opacity: 90% !important;
   padding: 10px;
   border-radius: 8px;
   border-color: #333;
@@ -237,7 +236,7 @@
   flex: 1;
   padding: 10px;
   margin-right: 10px;
-  border: 1px solid #0805d0;
+  border: 1px solid #0805d0 !important;
   border-radius: 4px;
   resize: none;
 }
@@ -246,8 +245,8 @@
 .appnewsfeed .send-button,
 .appnewsfeed .upload-button {
   cursor: pointer;
-  background-color: #646cff;
-  color: white;
+  background-color: #646cff !important;
+  color: white !important;
   border: none;
   padding: 10px;
   border-radius: 4px;
@@ -284,14 +283,28 @@
   border-radius: 5px;
   margin-bottom: 5px;
 }
-
+.appnewsfeed .search-liste{
+  position: fixed;
+  z-index: 1000;
+  background-color: rgb(243, 241, 241);
+  margin-top: 28px;
+  width: 290px;
+  margin-left: 250px;
+  border-radius: 20px;
+}
+.appnewsfeed .search-liste ul {
+  list-style: none; 
+}
+.appnewsfeed .search-liste li {
+  color: #0805d0;
+}
 /* Media Query for Small Screens */
 @media screen and (max-width: 600px) {
-  .appnewsfeed .app .input-container {
-    flex-direction: column;
+  .appnewsfeed .input-container {
+        flex-direction: column;
     align-items: stretch;
   }
-  .appnewsfeed .app .sidebar {
+  .appnewsfeed .sidebar {
     display: none;
   }
   .appnewsfeed .comment-button {
