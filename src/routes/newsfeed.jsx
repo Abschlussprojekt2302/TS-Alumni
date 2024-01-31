@@ -30,7 +30,7 @@ const NewsFeed = () => {
   const [user_ids, setUser_ids] = useState([])
   const [name, setName] = useState('');
   const [searchliste, setSearchListe] = useState('nicht');
-  const [Commentscount,setCommentscount] = useState('')
+ 
   const fetchUserData = async () => {
 
     try {
@@ -263,11 +263,9 @@ const NewsFeed = () => {
   const handelpostid = (index, postid) => {
     setPostId(postid);
     fetchComments();
-    setCommentscount(Comments.length);
+
   }
-  const handelcount = () =>{
-    setCommentscount('')
-  }
+  
   const fetchUserDatas = async (name) => {
     try {
       const url = `https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getUserByName`;
@@ -351,7 +349,7 @@ const NewsFeed = () => {
           ) : (
             Posts.slice(-1000).map((post, index) => (
 
-              <div className="message" key={index} onMouseOver={() => handelpostid(index, post.id)} onMouseDown={handelcount}>
+              <div className="message" key={index} onMouseOver={() => handelpostid(index, post.id)} >
                 <div className='user'>
                   <img src={userphotos[post.user_id]} width='30px'></img>
                   <a href={"/profil/" + post.user_id}>
