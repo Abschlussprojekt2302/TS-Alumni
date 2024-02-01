@@ -43,36 +43,37 @@ const Profile = () => {
     const [editMode, setEditMode] = useState(false);
     const [newBirthdate, setNewBirthdate] = useState(userData.BirthDate);
     const [newCourse, setNewCourse] = useState(userData.Course);
-    useEffect(() => {
+   
+    const fetchUserData = async () => {
 
-        const fetchUserData = async () => {
+        try {
+            var match = window.location.href.match(/\/([^\/]+)$/);
+            var user_id = match ? match[1] : null;
+            const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getPosts/${user_id}`, {
+                method: 'GET',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
 
-            try {
-                var match = window.location.href.match(/\/([^\/]+)$/);
-                var user_id = match ? match[1] : null;
-                const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getPosts/${user_id}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    },
-                });
+            const data = await response.json();
 
-                const data = await response.json();
+            // console.log(data);
 
-                // console.log(data);
-
-                if (data.status === 'ok') {
-                    setPosts(data.posts);
-                } else {
-                    console.error('Error fetching user data', data);
-                }
-            } catch (error) {
-                console.error('Network error', error);
-            } finally {
-                setIsLoading(false);
+            if (data.status === 'ok') {
+                setPosts(data.posts);
+            } else {
+                console.error('Error fetching user data', data);
             }
-        };
-
+        } catch (error) {
+            console.error('Network error', error);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+   
+   
+    useEffect(() => {
 
         const isconnected = async () => {
 
@@ -218,11 +219,10 @@ const Profile = () => {
     }, [Posts, setUserDataFetched, Comments, name, realNames]);
 
 
-    const getuserdata = async () => {
+    const getuserdatas = async () => {
         try {
             var match = window.location.href.match(/\/([^\/]+)$/);
             var user_id = match[1];
-            'const user_id = localStorage.getItem("UserID");'
             const url = 'https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getUser/' + user_id
             const response = await fetch(url,
                 {
@@ -231,7 +231,7 @@ const Profile = () => {
                 });
             const userData = await response.json()
             setUserData(userData)
-            // console.log(userData)
+            console.log(userData)
         } catch (error) {
             console.error("Fehler beim Bearbeiten des Profils", error);
         }
@@ -325,9 +325,7 @@ const Profile = () => {
         fetchComments();
 
     };
-    const profil = () => {
-        navigate("/profil");
-    }
+   
     const handlelogout = () => {
         localStorage.removeItem("UserID")
     }
@@ -397,15 +395,19 @@ const Profile = () => {
 
     const handleSaveClick = () => {
         handleUpdateProfile();
+        getuserdatas();
+        getuserdatas();
         setNewBirthdate(userData.BirthDate);
         setNewCourse(userData.Course);
-
         setEditMode(false);
+        
     };
 
     const handleCancelClick = () => {
         setNewBirthdate(userData.BirthDate);
         setNewCourse(userData.Course);
+        getuserdatas();
+        getuserdatas();
         setEditMode(false);
     };
 

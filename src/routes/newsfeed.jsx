@@ -235,7 +235,6 @@ const NewsFeed = () => {
       });
       const CommentsData = await response.json();
 
-
       if (CommentsData.status === 'ok') {
         setComments(CommentsData.comments);
 
