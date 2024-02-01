@@ -16,6 +16,11 @@
 
 // loginGoogle.spec.js
 describe('Google Login Test', () => {
+
+  beforeEach(function () {
+    cy.loginByGoogleApi()
+  })
+
   it('should perform Google login and redirect accordingly', () => {
     const testEmail = 'ambikaangadi07@gmail.com'; // Replace with your test Gmail account
     const testPassword = ''; // Replace with your test Gmail account password
