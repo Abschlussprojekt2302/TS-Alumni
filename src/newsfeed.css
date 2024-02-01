@@ -20,8 +20,8 @@
 }
 
 .app .chat {
-  width: 300px;
-  padding: 20px;
+  width: 1000px;
+  padding: 100px;
   box-shadow: none;
   /* Entfernen des Schattens */
 }

@@ -38,21 +38,39 @@ function LoginGoogle() {
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ user: responseFetch.user })
+          body: JSON.stringify(responseFetch)
         }
       );
 
       const responseData = await responseToBackend.json();
-      console.log("Response Data from Backend:", responseData);
+      console.log("data From backend login google", responseData)
+
       setUserData(responseData);
-      localStorage.setItem("Session", JSON.stringify(responseData.sessionData));
+      var sessionData = responseData.sessionData;
+      localStorage.setItem("Session", sessionData);
+
+
+
 
       if (responseData.isNewUser === false) {
-        navigate("/newacc");
+        var existingUserMessage = JSON.parse(responseData.steps.existingUserMessage);
+        var userID = existingUserMessage[0].UserID;
+        localStorage.setItem("UserID", userID);
+
       }
       else {
+        var data = JSON.parse(responseData.user);
+        var userID = data[0][0].UserID;
+        console.log("userID ",userID)
+        localStorage.setItem("UserID", userID);
+      }
+
+      if (responseData.isNewUser === false) {
         navigate("/newsfeed");
       }
+      else {
+        navigate("/newacc");
+      } 
 
     } catch (error) {
       console.error("Fehler beim Senden der Daten an das Backend.", error);

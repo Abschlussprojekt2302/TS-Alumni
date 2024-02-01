@@ -8,25 +8,26 @@ const AccountErstellung = (props) => {
   const [Kurs, setKurs] = useState('');
   const navigate = useNavigate(); // Erstellen einer Instanz von useHistory
 
-  const handleCreateAccount = () => {
-    console.log('Account erstellen:', { Geburtsdatum, Kurs });
+  const handleCreateAccount = async () => {
+    try {
+      
+      const response = await fetch('https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/updateUser', {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          "user_id":localStorage.getItem("UserID"),
+          "BirthDate": Geburtsdatum,
+          "Course":Kurs
+      
+      })
+      });
+    }catch (error) {
+      console.error("Fehler beim Senden der Daten an das Backend.", error);
+    } 
     navigate('/newsfeed'); // Weiterleitung zu Home
   };
 
-  const handleLogin = () => {
-    try {
-      const response = apiCall.post(api.lambda/getAllPosts);
-      if (response.status === 'ok') {
-        navigate('/newsfeed');
-      } else {
-        console.error('Fehler beim Anmelden.', response);
-      }
-     } catch (error) {
-        console.error('Fehler beim Abrufen von Google-Benutzerdaten. handleLogin', error);
-      }
-    };
-
-  return (
+  return ( 
     <div className="account-erstellung-container">
       <img src="https://cdn.discordapp.com/attachments/1195301143161606205/1195301598507827240/techst_logo_rz_white.png?ex=65b37e5c&is=65a1095c&hm=951cba6cabd865ab2f4e7c4fd8e295c18bb4f3b9a3474d434849184a84fcbd48&" alt="Logo" className="logo" />
       <div className="eingabefelder">
