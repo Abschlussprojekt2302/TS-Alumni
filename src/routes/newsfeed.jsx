@@ -5,7 +5,6 @@ import logo from '../assets/logo.png';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
-
 const NewsFeed = () => {
   const [Posts, setPosts] = useState([]);
   const [Comments, setComments] = useState([]);
@@ -42,12 +41,7 @@ const NewsFeed = () => {
           'Content-Type': 'application/json',
         },
       });
-
       const data = await response.json();
-
-      // console.log(data);
-
-
       if (data.status === 'ok') {
         setPosts(data.posts);
 
@@ -60,12 +54,9 @@ const NewsFeed = () => {
       setIsLoading(false);
     }
   };
-  // console.log(Posts)
+
   useEffect(() => {
-
-
     const isconnected = async () => {
-
       try {
         const user_id = localStorage.getItem("UserID");
         if (!user_id) {
@@ -76,8 +67,6 @@ const NewsFeed = () => {
             await fetchUserData();
             setUserDataFetched(true);
           }
-
-
 
           const fetchUserUserData = async (postUserIds) => {
             try {
@@ -132,23 +121,18 @@ const NewsFeed = () => {
 
           };
 
-
-
           getUser();
           changeClassSearchListe(name)
-
           fetchUserUserData(Posts.map((post) => post.user_id));
           fetchcommentUserData(Comments.map((comment) => comment.UserID));
 
         }
-
       } catch (error) {
         console.error('auth error', error);
       }
     };
     isconnected();
   }, [Posts, setUserDataFetched, Comments, name, realNames]);
-
 
   const getUser = async () => {
     try {
@@ -183,7 +167,6 @@ const NewsFeed = () => {
       const data = await response.json();
       setNewMessage('')
       fetchUserData()
-
     } catch (error) {
       console.error('Network error', error);
     }
@@ -229,17 +212,12 @@ const NewsFeed = () => {
         headers: { 'Content-Type': 'application/json' },
       });
       const CommentsData = await response.json();
-
-
       if (CommentsData.status === 'ok') {
         setComments(CommentsData.comments);
 
       } else {
         console.error('Error fetching user data', CommentsData);
       }
-
-
-
     } catch (error) {
       console.error('Error fetching user real names', error);
     }
@@ -279,7 +257,6 @@ const NewsFeed = () => {
         }
       };
       deleteComments();
-
     } catch (error) {
       console.error('Netzwerkfehler', error);
     }
@@ -303,15 +280,12 @@ const NewsFeed = () => {
     setShowComments(index === showComments ? null : index);
     setPostId(postId);
     fetchComments();
-
   };
   const handlelogout = () => {
     localStorage.removeItem("UserID")
   }
   const handelpostid = (index, postid) => {
     setPostId(postid);
-
-
   }
 
   const fetchUserDatas = async (name) => {
@@ -330,11 +304,8 @@ const NewsFeed = () => {
       setRealNames(extractedRealNames);
       const extractedUserID = datas.map(user => user.UserID);
       setUser_ids(extractedUserID);
-
-      console.log("datas:", datas)
     } catch (error) {
       console.error('Error fetching user data:', error);
-
       console.log(error)
     }
   };
