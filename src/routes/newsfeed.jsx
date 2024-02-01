@@ -250,6 +250,29 @@ const NewsFeed = () => {
       console.error('Error fetching user real names', error);
     }
   };
+
+  const deletePost = async (postId) => {
+    try {
+      const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+        method: 'DELETE',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+      });
+  
+      if (response.ok) {
+        // Entfernen Sie den gelöschten Post aus dem Posts-Array
+        const updatedPosts = Posts.filter(post => post.id !== postId);
+        setPosts(updatedPosts);
+        console.log('Post erfolgreich gelöscht');
+      } else {
+        console.error('Fehler beim Löschen des Posts');
+      }
+    } catch (error) {
+      console.error('Netzwerkfehler', error);
+    }
+  };
+  
   const handleToggle = (index, postId) => {
     setShowComments(index === showComments ? null : index);
     setPostId(postId);
@@ -297,6 +320,7 @@ const NewsFeed = () => {
     setName(e.target.value);
     fetchUserDatas(name);
   };
+  
   return (
 
     <div className="appnewsfeed">
@@ -311,7 +335,7 @@ const NewsFeed = () => {
             className="search-bar-input"
             value={name}
             onChange={handleInputChange}
-
+    
           />
           <button >Search</button>
         </div>
@@ -331,7 +355,7 @@ const NewsFeed = () => {
         </div>
       </div>
       <div className={searchliste}>
-
+    
         <ul>
           {realNames.slice(-1000).map((name, index) => (
             <li key={index}>
@@ -341,16 +365,16 @@ const NewsFeed = () => {
             </li>
           ))}
         </ul>
-
+    
       </div>
-
+    
       <div className="chat-container">
         <div className="Posts-container">
           {isLoading ? (
             <p>Loading Posts...</p>
           ) : (
             Posts.slice(-1000).map((post, index) => (
-
+    
               <div className="message" key={index} onMouseOver={() => handelpostid(index, post.id)} >
                 <div className='user'>
                   <img src={userphotos[post.user_id]} width='30px'></img>
@@ -373,6 +397,9 @@ const NewsFeed = () => {
                 <div className="comment-button" onClick={() => handleToggle(index, post.id)}>
                   <p>Comments </p>
                 </div>
+                {localStorage.getItem("UserID") === post.user_id && (
+                  <button onClick={() => deletePost(post.id)}>Delete</button>
+                )}
                 {showComments === index && (
                   <div className="comments-container">
                     <div className="comments">
@@ -381,7 +408,7 @@ const NewsFeed = () => {
                       ) : (
                         Comments.slice(-1000).map((comment, index) => (
                           <div className="comment" key={index}>
-
+    
                             <div className='commentuser'>
                               <img src={commentphotos[comment.UserID]} width='30px'></img>
                               <a href={"/profil/" + post.user_id}>
@@ -396,7 +423,7 @@ const NewsFeed = () => {
                                 {comment.Content}
                               </p>
                             </div>
-
+    
                           </div>
                         ))
                       )}
@@ -433,9 +460,10 @@ const NewsFeed = () => {
           <button onClick={handleSendMessage} className="send-button">Send</button>
         </div>
       </div>
-
+    
     </div>
-  );
+    );
+    
 };
 
 export default NewsFeed;
