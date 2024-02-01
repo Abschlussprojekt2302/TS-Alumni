@@ -184,6 +184,7 @@ const NewsFeed = () => {
 
       // console.log('Data:', data);
       setNewMessage('')
+      window.location.reload()
     } catch (error) {
       console.error('Network error', error);
     }
