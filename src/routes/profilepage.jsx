@@ -3,7 +3,8 @@ import '../profile.css';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import logo from '../assets/logo.png';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
     const [Posts, setPosts] = useState([]);
@@ -43,7 +44,7 @@ const Profile = () => {
     const [editMode, setEditMode] = useState(false);
     const [newBirthdate, setNewBirthdate] = useState(userData.BirthDate);
     const [newCourse, setNewCourse] = useState(userData.Course);
-   
+
     const fetchUserData = async () => {
 
         try {
@@ -57,9 +58,6 @@ const Profile = () => {
             });
 
             const data = await response.json();
-
-            // console.log(data);
-
             if (data.status === 'ok') {
                 setPosts(data.posts);
             } else {
@@ -71,12 +69,9 @@ const Profile = () => {
             setIsLoading(false);
         }
     };
-   
-   
+
     useEffect(() => {
-
         const isconnected = async () => {
-
             try {
                 const user_id = localStorage.getItem("UserID");
                 if (!user_id) {
@@ -88,7 +83,6 @@ const Profile = () => {
                         setUserDataFetched(true);
                     }
 
-
                     const changeClassPostContainer = () => {
                         var match = window.location.href.match(/\/([^\/]+)$/);
                         var user_id = match ? match[1] : null;
@@ -99,8 +93,6 @@ const Profile = () => {
                         } else {
                             setCurrentClassName("nicht");
                         }
-
-
                     };
                     const changeClassSearchListe = (name) => {
                         if (name == '') {
@@ -111,16 +103,15 @@ const Profile = () => {
                     };
                     const changeClassEdit = () => {
                         var match = window.location.href.match(/\/([^\/]+)$/);
-                            var user_id = match[1];
-                            var editUser =localStorage.getItem("UserID")
+                        var user_id = match[1];
+                        var editUser = localStorage.getItem("UserID")
 
-                        if (user_id ==  editUser) {
+                        if (user_id == editUser) {
                             setEdit("edit");
                         } else {
                             setEdit("nicht");
                         }
                     };
-                    
 
                     const getUser = async () => {
                         try {
@@ -133,8 +124,6 @@ const Profile = () => {
                                 });
                             const userData = await response.json()
                             setUser(userData)
-                            // console.log(userData)
-
                         } catch (error) {
                             console.error("Fehler beim Bearbeiten des Profils", error);
                         }
@@ -196,7 +185,6 @@ const Profile = () => {
                                 });
                             const userData = await response.json()
                             setUserData(userData)
-                            // console.log(userData)
                         } catch (error) {
                             console.error("Fehler beim Bearbeiten des Profils", error);
                         }
@@ -231,7 +219,6 @@ const Profile = () => {
                 });
             const userData = await response.json()
             setUserData(userData)
-            console.log(userData)
         } catch (error) {
             console.error("Fehler beim Bearbeiten des Profils", error);
         }
@@ -252,8 +239,6 @@ const Profile = () => {
             });
 
             const data = await response.json();
-
-            // console.log('Data:', data);
             setNewMessage('')
             fetchUserData();
         } catch (error) {
@@ -276,17 +261,12 @@ const Profile = () => {
             });
 
             const data = await response.json();
-
-            // console.log('Data:', data);
-
             setNewcomment('');
             handleToggle(null, postId);
-
         } catch (error) {
             console.error('Network error', error);
         }
     }
-
 
     const handleImageUpload = (event) => {
         const file = event.target.files[0];
@@ -305,16 +285,11 @@ const Profile = () => {
                 headers: { 'Content-Type': 'application/json' },
             });
             const CommentsData = await response.json();
-
-
             if (CommentsData.status === 'ok') {
                 setComments(CommentsData.comments);
             } else {
                 console.error('Error fetching user data', CommentsData);
             }
-
-
-
         } catch (error) {
             console.error('Error fetching user real names', error);
         }
@@ -323,9 +298,8 @@ const Profile = () => {
         setShowComments(index === showComments ? null : index);
         setPostId(postId);
         fetchComments();
-
     };
-   
+
     const handlelogout = () => {
         localStorage.removeItem("UserID")
     }
@@ -361,7 +335,6 @@ const Profile = () => {
             console.log("datas:", datas)
         } catch (error) {
             console.error('Error fetching user data:', error);
-
             console.log(error)
         }
     };
@@ -373,7 +346,6 @@ const Profile = () => {
 
     const handleUpdateProfile = async () => {
         try {
-
             const response = await fetch('https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/updateUser', {
                 method: "PUT",
                 headers: { "Content-Type": "application/json" },
@@ -381,39 +353,83 @@ const Profile = () => {
                     "user_id": localStorage.getItem("UserID"),
                     "BirthDate": newBirthdate,
                     "Course": newCourse
-
                 })
             });
         } catch (error) {
             console.error("Fehler beim Senden der Daten an das Backend.", error);
         }
-
     };
     const handleEditClick = () => {
         setEditMode(true);
     };
 
-    const handleSaveClick = () => {
-        handleUpdateProfile();
-        getuserdatas();
+    const handleSaveClick = async () => {
+        await handleUpdateProfile();
         getuserdatas();
         setNewBirthdate(userData.BirthDate);
         setNewCourse(userData.Course);
         setEditMode(false);
-        
     };
 
     const handleCancelClick = () => {
         setNewBirthdate(userData.BirthDate);
         setNewCourse(userData.Course);
-        getuserdatas();
-        getuserdatas();
         setEditMode(false);
     };
 
+    const deletePost = async (postId) => {
+        try {
 
+            const Post = async () => {
+                try {
+                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                } catch (error) {
+                    console.error('Netzwerkfehler', error);
+                }
+            };
+            const deleteComments = async () => {
+                try {
+                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComments/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+                    const data =  await response.json();
+                    if (data.status === 'ok') {
+                      Post()
+                      fetchUserData()
+                    }
+                } catch (error) {
+                    console.error('Netzwerkfehler', error);
+                }
+            };
+            deleteComments();
+        } catch (error) {
+            console.error('Netzwerkfehler', error);
+        }
+    };
+
+    const deletecomment = async (commentId) => {
+        try {
+            const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComment/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+        } catch (error) {
+            console.error('Netzwerkfehler', error);
+        }
+    };
     return (
-
         <div className="appprofile">
             <div className="sidebar">
                 <Sidebar >
@@ -516,6 +532,9 @@ const Profile = () => {
                                     <p >
                                         <strong>{post.CreatedAt}</strong>
                                     </p>
+                                    {localStorage.getItem("UserID") === post.user_id && (
+                                        <FontAwesomeIcon className='delete' icon={faTrash} onClick={() => deletePost(post.id)} />
+                                    )}
                                 </div>
                                 <div className="post">
                                     <p>
@@ -545,6 +564,9 @@ const Profile = () => {
                                                             <p >
                                                                 <strong>{comment.CreatedAt}</strong>
                                                             </p>
+                                                            {localStorage.getItem("UserID") === comment.UserID && (
+                                                                <FontAwesomeIcon icon={faTrash} onClick={() => deletecomment(comment.CommentID)} />
+                                                            )}
                                                         </div>
                                                         <div className="comment-text">
                                                             <p>
