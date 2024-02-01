@@ -3,7 +3,8 @@ import '../profile.css';
 import { useNavigate } from 'react-router-dom';
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import logo from '../assets/logo.png';
-
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 const Profile = () => {
     const [Posts, setPosts] = useState([]);
@@ -28,7 +29,7 @@ const Profile = () => {
     const [postId, setPostId] = useState(null);
     const [currentClassName, setCurrentClassName] = useState('input-container');
     const [searchliste, setSearchListe] = useState('nicht');
-    const [edit,setEdit] = useState('edit');
+    const [edit, setEdit] = useState('edit');
     const [userData, setUserData] = useState({
         RealName: '',
         EmailAddress: '',
@@ -110,16 +111,16 @@ const Profile = () => {
                     };
                     const changeClassEdit = () => {
                         var match = window.location.href.match(/\/([^\/]+)$/);
-                            var user_id = match[1];
-                            var editUser =localStorage.getItem("UserID")
+                        var user_id = match[1];
+                        var editUser = localStorage.getItem("UserID")
 
-                        if (user_id ==  editUser) {
+                        if (user_id == editUser) {
                             setEdit("edit");
                         } else {
                             setEdit("nicht");
                         }
                     };
-                    
+
 
                     const getUser = async () => {
                         try {
@@ -408,7 +409,56 @@ const Profile = () => {
         setEditMode(false);
     };
 
+    const deletePost = async (postId) => {
+        try {
 
+            const Post = async () => {
+                try {
+                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                } catch (error) {
+                    console.error('Netzwerkfehler', error);
+                }
+            };
+            const deleteComments = async () => {
+                try {
+                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComments/${postId}`, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        },
+                    });
+
+                } catch (error) {
+                    console.error('Netzwerkfehler', error);
+                }
+            };
+            deleteComments();
+            Post()
+            fetchUserData()
+        } catch (error) {
+            console.error('Netzwerkfehler', error);
+        }
+    };
+
+    const deletecomment = async (commentId) => {
+        try {
+            const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComment/${commentId}`, {
+                method: 'DELETE',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+            });
+
+        } catch (error) {
+            console.error('Netzwerkfehler', error);
+        }
+    };
     return (
 
         <div className="appprofile">
@@ -513,6 +563,9 @@ const Profile = () => {
                                     <p >
                                         <strong>{post.CreatedAt}</strong>
                                     </p>
+                                    {localStorage.getItem("UserID") === post.user_id && (
+                                        <FontAwesomeIcon className='delete' icon={faTrash} onClick={() => deletePost(post.id)} />
+                                    )}
                                 </div>
                                 <div className="post">
                                     <p>
@@ -542,6 +595,9 @@ const Profile = () => {
                                                             <p >
                                                                 <strong>{comment.CreatedAt}</strong>
                                                             </p>
+                                                            {localStorage.getItem("UserID") === comment.UserID && (
+                                                                <FontAwesomeIcon icon={faTrash} onClick={() => deletecomment(comment.CommentID)} />
+                                                            )}
                                                         </div>
                                                         <div className="comment-text">
                                                             <p>

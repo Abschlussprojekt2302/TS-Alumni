@@ -2,6 +2,8 @@ import React, { useState, useEffect } from 'react';
 import '../newsfeed.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faTrash } from '@fortawesome/free-solid-svg-icons';
 
 
 const NewsFeed = () => {
@@ -253,21 +255,50 @@ const NewsFeed = () => {
 
   const deletePost = async (postId) => {
     try {
-      const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+      
+      const Post = async () => {
+        try {
+            const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+           
+        } catch (error) {
+          console.error('Netzwerkfehler', error);
+        }
+      };
+      const deleteComments = async () => {
+        try {
+            const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComments/${postId}`, {
+            method: 'DELETE',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+          });
+          
+        } catch (error) {
+          console.error('Netzwerkfehler', error);
+        }
+      };
+     deleteComments();
+     Post()
+     fetchUserData()    
+    } catch (error) {
+      console.error('Netzwerkfehler', error);
+    }
+  };
+  
+  const deletecomment = async (commentId) => {
+    try {
+      const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComment/${commentId}`, {
         method: 'DELETE',
         headers: {
           'Content-Type': 'application/json',
         },
       });
-  
-      if (response.ok) {
-        // Entfernen Sie den gelöschten Post aus dem Posts-Array
-        const updatedPosts = Posts.filter(post => post.id !== postId);
-        setPosts(updatedPosts);
-        console.log('Post erfolgreich gelöscht');
-      } else {
-        console.error('Fehler beim Löschen des Posts');
-      }
+     
     } catch (error) {
       console.error('Netzwerkfehler', error);
     }
@@ -320,7 +351,7 @@ const NewsFeed = () => {
     setName(e.target.value);
     fetchUserDatas(name);
   };
-  
+
   return (
 
     <div className="appnewsfeed">
@@ -385,6 +416,9 @@ const NewsFeed = () => {
                   <p >
                     {post.CreatedAt}
                   </p>
+                  {localStorage.getItem("UserID") === post.user_id && (
+                  <FontAwesomeIcon className='delete' icon={faTrash} onClick={() => deletePost(post.id)} />
+                )} 
                 </div>
                 <div className="post">
                   <p>
@@ -397,9 +431,7 @@ const NewsFeed = () => {
                 <div className="comment-button" onClick={() => handleToggle(index, post.id)}>
                   <p>Comments </p>
                 </div>
-                {localStorage.getItem("UserID") === post.user_id && (
-                  <button onClick={() => deletePost(post.id)}>Delete</button>
-                )}
+                
                 {showComments === index && (
                   <div className="comments-container">
                     <div className="comments">
@@ -417,6 +449,9 @@ const NewsFeed = () => {
                               <p >
                                 {comment.CreatedAt}
                               </p>
+                              {localStorage.getItem("UserID") === comment.UserID && (
+                              <FontAwesomeIcon icon={faTrash} onClick={() => deletecomment(comment.CommentID)} />
+                             )}
                             </div>
                             <div className="comment-text">
                               <p>

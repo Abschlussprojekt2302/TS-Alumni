@@ -154,6 +154,16 @@
   margin-right: 10px;
   border-radius: 50%;
 }
+/* delete icon newsfeed*/
+.appnewsfeed .delete{
+  margin-left: 60% ;
+}
+.appnewsfeed .delete fa-trash {
+  color: red;
+  cursor: pointer;
+  margin-left: 10px;
+}
+
 
 /* User Message Paragraph Styles */
 .appnewsfeed .message .user p {
@@ -315,5 +325,8 @@
   }
   .appnewsfeed .search-bar {
     display: none;
+  }
+  .appnewsfeed .delete{
+    margin-left: 20% ;
   }
 }
