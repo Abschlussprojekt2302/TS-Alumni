@@ -181,6 +181,7 @@ const NewsFeed = () => {
       const data = await response.json();
       setNewMessage('')
       fetchUserData()
+
     } catch (error) {
       console.error('Network error', error);
     }

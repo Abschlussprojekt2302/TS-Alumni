@@ -40,8 +40,6 @@ function LoginGoogle() {
 
       const responseData = await responseToBackend.json();
       setUserData(responseData);
-
-      ///   SessionData und UserID ins LocalStorage speichern ///
       var sessionData = responseData.sessionData;
       localStorage.setItem("Session", sessionData);
 
