@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import '../newsfeed.css';
 import { useNavigate } from 'react-router-dom';
 import logo from '../assets/logo.png';
@@ -55,6 +55,17 @@ const NewsFeed = () => {
     }
   };
 
+  const intervalIdRef = useRef(null);
+  const startFetchInterval = () => {
+    const intervalId = setInterval(() => {
+      fetchUserData();
+    }, 180000);
+    intervalIdRef.current = intervalId;
+  };
+  const stopFetchInterval = () => {
+    clearInterval(intervalIdRef.current);
+  };
+
   useEffect(() => {
     const isconnected = async () => {
       try {
@@ -67,6 +78,7 @@ const NewsFeed = () => {
             await fetchUserData();
             setUserDataFetched(true);
           }
+          startFetchInterval();
 
           const fetchUserUserData = async (postUserIds) => {
             try {
@@ -125,7 +137,9 @@ const NewsFeed = () => {
           changeClassSearchListe(name)
           fetchUserUserData(Posts.map((post) => post.user_id));
           fetchcommentUserData(Comments.map((comment) => comment.UserID));
-
+          return () => {
+            stopFetchInterval();
+          };
         }
       } catch (error) {
         console.error('auth error', error);
@@ -214,7 +228,7 @@ const NewsFeed = () => {
       const CommentsData = await response.json();
       if (CommentsData.status === 'ok') {
         setComments(CommentsData.comments);
-
+        
       } else {
         console.error('Error fetching user data', CommentsData);
       }
@@ -234,7 +248,7 @@ const NewsFeed = () => {
               'Content-Type': 'application/json',
             },
           });
-
+          fetchUserData()
         } catch (error) {
           console.error('Netzwerkfehler', error);
         }
@@ -256,7 +270,31 @@ const NewsFeed = () => {
           console.error('Netzwerkfehler', error);
         }
       };
-      deleteComments();
+      const fetchComments = async () => {
+        try {
+          const url = `https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getComments/${postId}`;
+          const response = await fetch(url, {
+            method: 'GET',
+            headers: { 'Content-Type': 'application/json' },
+          });
+          const CommentsData = await response.json();
+          if (CommentsData.status === 'ok') {
+            setComments(CommentsData.comments);
+            console.log("length: ",CommentsData.comments.length)
+            if (CommentsData.comments.length === '0'){
+              deleteComments()
+            }else{
+              
+              Post()
+            }
+          } else {
+            console.error('Error fetching user data', CommentsData);
+          }
+        } catch (error) {
+          console.error('Error fetching user real names', error);
+        }
+      };
+      fetchComments()
     } catch (error) {
       console.error('Netzwerkfehler', error);
     }
@@ -403,7 +441,6 @@ const NewsFeed = () => {
                       ) : (
                         Comments.slice(-1000).map((comment, index) => (
                           <div className="comment" key={index}>
-
                             <div className='commentuser'>
                               <img src={commentphotos[comment.UserID]} width='30px'></img>
                               <a href={"/profil/" + post.user_id}>

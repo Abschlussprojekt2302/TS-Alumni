@@ -382,35 +382,59 @@ const Profile = () => {
 
             const Post = async () => {
                 try {
-                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-
+                  const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deletePost/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  });
+                  fetchUserData()
                 } catch (error) {
-                    console.error('Netzwerkfehler', error);
+                  console.error('Netzwerkfehler', error);
                 }
-            };
-            const deleteComments = async () => {
+              };
+              const deleteComments = async () => {
                 try {
-                    const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComments/${postId}`, {
-                        method: 'DELETE',
-                        headers: {
-                            'Content-Type': 'application/json',
-                        },
-                    });
-                    const data =  await response.json();
-                    if (data.status === 'ok') {
-                      Post()
-                      fetchUserData()
-                    }
+                  const response = await fetch(`https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/deleteComments/${postId}`, {
+                    method: 'DELETE',
+                    headers: {
+                      'Content-Type': 'application/json',
+                    },
+                  });
+                  const data =  await response.json();
+                  if (data.status === 'ok') {
+                    Post()
+                    fetchUserData()
+                  }
                 } catch (error) {
-                    console.error('Netzwerkfehler', error);
+                  console.error('Netzwerkfehler', error);
                 }
-            };
-            deleteComments();
+              };
+              const fetchComments = async () => {
+                try {
+                  const url = `https://845d97vw4k.execute-api.eu-central-1.amazonaws.com/getComments/${postId}`;
+                  const response = await fetch(url, {
+                    method: 'GET',
+                    headers: { 'Content-Type': 'application/json' },
+                  });
+                  const CommentsData = await response.json();
+                  if (CommentsData.status === 'ok') {
+                    setComments(CommentsData.comments);
+                    console.log("length: ",CommentsData.comments.length)
+                    if (CommentsData.comments.length === '0'){
+                      deleteComments()
+                    }else{
+                      
+                      Post()
+                    }
+                  } else {
+                    console.error('Error fetching user data', CommentsData);
+                  }
+                } catch (error) {
+                  console.error('Error fetching user real names', error);
+                }
+              };
+              fetchComments()
         } catch (error) {
             console.error('Netzwerkfehler', error);
         }
