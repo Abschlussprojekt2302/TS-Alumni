@@ -419,7 +419,7 @@ const Profile = () => {
               });
               const CommentsData = await response.json();
               if (CommentsData.status === 'ok') {
-                setComments(CommentsData.comments);
+                setComments(CommentsData.comments); 
                 if (CommentsData.comments.length == "0"){
                   Post();
                 }else{
