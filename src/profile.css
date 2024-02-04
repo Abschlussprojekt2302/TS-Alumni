@@ -291,6 +291,21 @@ color: #010b1f;
     flex-direction: column;
     align-items: stretch;
   }
+
+  .appprofile .input-container textarea {
+    width: 90%; 
+    margin-bottom: 10px;
+  }
+
+  .appprofile .input-container .upload-button {
+    margin-right: 0;
+    margin-bottom: 10px;
+  }
+
+  .appprofile .input-container .send-button {
+    margin-right: 10;
+    width: 90%;
+  }
   .appprofile .sidebar {
 
     display: none;
