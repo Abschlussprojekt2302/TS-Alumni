@@ -263,7 +263,7 @@ const NewsFeed = () => {
           });
           const data =  await response.json();
           if (data.status === 'ok') {
-            Post()
+            await Post()
             fetchUserData()
           }
         } catch (error) {
@@ -280,12 +280,11 @@ const NewsFeed = () => {
           const CommentsData = await response.json();
           if (CommentsData.status === 'ok') {
             setComments(CommentsData.comments);
-            console.log("length: ",CommentsData.comments.length)
-            if (CommentsData.comments.length === '0'){
-              deleteComments()
+            if (CommentsData.comments.length == "0"){
+              Post();
             }else{
+              deleteComments();
               
-              Post()
             }
           } else {
             console.error('Error fetching user data', CommentsData);
@@ -358,7 +357,7 @@ const NewsFeed = () => {
     <div className="appnewsfeed">
       <div className="header">
         <div className="logo-container">
-          <img src={logo} alt="Logo" className="logo" />
+          <img src={logo}  className="logo" />
         </div>
         <div className="search-bar">
           <input
@@ -373,7 +372,7 @@ const NewsFeed = () => {
         </div>
         <div className="user-info-container">
           <div className="user-photo">
-            <img src={user.ProfileImg} alt="User Photo" />
+            <img src={user.ProfileImg}  />
           </div>
           <div className="user-details" >
             <div className="dropdown-container">
