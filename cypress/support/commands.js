@@ -45,3 +45,4 @@ Cypress.Commands.add('loginByGoogleApi', () => {
     })
   })
 })
+import 'cypress-file-upload';
