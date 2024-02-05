@@ -12,6 +12,7 @@ describe('Google', function () {
     it('New user registration, profile page', () => {
         cy.visit('http://aws2302.atrous.de/newacc');
         // Input new user data
+        
         cy.get('.eingabefelder input[type="date"]').type('2000-01-01');
         cy.get('.eingabefelder input[type="text"]').type('2302');
 
